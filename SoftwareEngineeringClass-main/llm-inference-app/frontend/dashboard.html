@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - LLM Inference</title>
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-dashboard">
+        <div class="nav-container">
+            <div class="logo">
+                <h1>LLM Inference</h1>
+            </div>
+            <button id="navLogoutBtn" class="btn btn-logout">Logout</button>
+        </div>
+    </nav>
+
+    <main class="dashboard-container">
+        <div class="dashboard-layout">
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <div class="sidebar-header">
+                    <div class="user-profile">
+                        <div class="user-avatar" id="userAvatar">U</div>
+                        <span id="userName" class="user-name"></span>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Comparison History</h3>
+                    <div class="history-list" id="comparisonHistoryList">
+                        <p class="empty-state">No comparison history yet</p>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>Chat History</h3>
+                    <div class="history-list" id="historyList">
+                        <p class="empty-state">No chat history yet</p>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Chat Area -->
+            <div class="chat-area">
+                <!-- Tabs for switching between modes -->
+                <div class="mode-tabs">
+                    <button class="mode-tab active" data-mode="single" id="singleModeTab">Single Model</button>
+                    <button class="mode-tab" data-mode="compare" id="compareModeTab">Compare Models</button>
+                </div>
+
+                <!-- Single Model Mode -->
+                <div class="mode-container" id="singleModeContainer">
+                    <div class="chat-messages" id="chatMessages">
+                        <div class="welcome-message">
+                            <h3>Welcome to LLM Inference</h3>
+                            <p>Start by typing your question below</p>
+                        </div>
+                    </div>
+
+                    <div class="chat-input-area">
+                        <form id="chatForm" class="chat-form">
+                            <div class="chat-form-row">
+                                <textarea 
+                                    id="promptInput" 
+                                    class="chat-input" 
+                                    placeholder="Ask me anything..." 
+                                    rows="3"
+                                    required
+                                ></textarea>
+                                <button type="submit" class="btn btn-primary btn-send">Send</button>
+                            </div>
+                            <span class="error-message" id="chatError"></span>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Compare Models Mode -->
+                <div class="mode-container hidden" id="compareModeContainer">
+                    <div class="compare-controls">
+                        <div class="model-selector">
+                            <h3>Select Models to Compare</h3>
+                            <div class="model-checkboxes">
+                                <label class="model-checkbox">
+                                    <input type="checkbox" name="model" value="gpt-3.5-turbo">
+                                    <span>GPT-3.5 Turbo</span>
+                                </label>
+                                <label class="model-checkbox">
+                                    <input type="checkbox" name="model" value="gpt-4">
+                                    <span>GPT-4</span>
+                                </label>
+                                <label class="model-checkbox">
+                                    <input type="checkbox" name="model" value="claude-v1">
+                                    <span>Claude v1</span>
+                                </label>
+                                <label class="model-checkbox">
+                                    <input type="checkbox" name="model" value="local-small">
+                                    <span>Local Small</span>
+                                </label>
+                            </div>
+                            <span class="error-message" id="modelError"></span>
+                        </div>
+                    </div>
+
+                    <div class="chat-messages comparison-view" id="comparisonMessages">
+                        <div class="welcome-message">
+                            <h3>Model Comparison</h3>
+                            <p>Select 2+ models above and enter your prompt</p>
+                        </div>
+                    </div>
+
+                    <div class="chat-input-area">
+                        <form id="compareForm" class="chat-form">
+                            <div class="chat-form-row">
+                                <textarea 
+                                    id="comparePromptInput" 
+                                    class="chat-input" 
+                                    placeholder="Enter your prompt to compare across models..." 
+                                    rows="3"
+                                    required
+                                ></textarea>
+                                <button type="submit" class="btn btn-primary btn-send">Compare</button>
+                            </div>
+                            <span class="error-message" id="compareError"></span>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/dashboard.js"></script>
+</body>
+</html>

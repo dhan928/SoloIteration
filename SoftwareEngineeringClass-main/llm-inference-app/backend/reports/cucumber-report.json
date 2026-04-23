@@ -1,0 +1,1870 @@
+[
+  {
+    "description": "  As a new user\n  I want to create an account and authenticate\n  So that I can access the LLM inference application",
+    "elements": [
+      {
+        "description": "",
+        "id": "user-authentication;successful-user-registration",
+        "keyword": "Scenario",
+        "line": 12,
+        "name": "Successful user registration",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "the application is initialized",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:10"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 9,
+            "name": "the database is accessible",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:14"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 13,
+            "name": "I don't have an existing account",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:24"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 14,
+            "name": "I register with email \"testuser@example.com\" and password \"ValidPass123!\"",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:39"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 15,
+            "name": "my account should be created successfully",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:64"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 16,
+            "name": "I should receive a user ID",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:70"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 17,
+            "name": "I should be able to login with those credentials",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:75"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@authentication",
+            "line": 1
+          },
+          {
+            "name": "@registration",
+            "line": 11
+          },
+          {
+            "name": "@smoke",
+            "line": 11
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "user-authentication;registration-fails-with-duplicate-email",
+        "keyword": "Scenario",
+        "line": 20,
+        "name": "Registration fails with duplicate email",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "the application is initialized",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:10"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 9,
+            "name": "the database is accessible",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:14"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 21,
+            "name": "a user with email \"existing@example.com\" already exists",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:29"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 22,
+            "name": "I attempt to register with email \"existing@example.com\" and password \"ValidPass123!\"",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:54"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 23,
+            "name": "the registration should fail",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:94"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 24,
+            "name": "I should receive error status 409",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:98"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 25,
+            "name": "the error message should contain \"already exists\"",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:105"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@authentication",
+            "line": 1
+          },
+          {
+            "name": "@registration",
+            "line": 19
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "user-authentication;registration-fails-with-weak-password",
+        "keyword": "Scenario",
+        "line": 28,
+        "name": "Registration fails with weak password",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "the application is initialized",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:10"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 9,
+            "name": "the database is accessible",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:14"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 29,
+            "name": "I don't have an existing account",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:24"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 30,
+            "name": "I attempt to register with email \"newuser@example.com\" and password \"weak\"",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:54"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 31,
+            "name": "the registration should fail",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:94"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 32,
+            "name": "I should receive error status 400",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:98"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 33,
+            "name": "the error message should contain \"password\"",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:105"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@authentication",
+            "line": 1
+          },
+          {
+            "name": "@registration",
+            "line": 27
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "user-authentication;user-login-with-valid-credentials",
+        "keyword": "Scenario",
+        "line": 36,
+        "name": "User login with valid credentials",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "the application is initialized",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:10"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 9,
+            "name": "the database is accessible",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:14"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 37,
+            "name": "a user with email \"testuser@example.com\" and password \"ValidPass123!\" exists",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:123"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 38,
+            "name": "I login with email \"testuser@example.com\" and password \"ValidPass123!\"",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:138"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 39,
+            "name": "I should receive an access token",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:148"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 40,
+            "name": "the token should contain my user information",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:153"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 41,
+            "name": "the login should succeed",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:163"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@authentication",
+            "line": 1
+          },
+          {
+            "name": "@login",
+            "line": 35
+          },
+          {
+            "name": "@smoke",
+            "line": 35
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "user-authentication;login-fails-with-wrong-password",
+        "keyword": "Scenario",
+        "line": 44,
+        "name": "Login fails with wrong password",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "the application is initialized",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:10"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 9,
+            "name": "the database is accessible",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:14"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 45,
+            "name": "a user with email \"testuser@example.com\" and password \"ValidPass123!\" exists",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:123"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 46,
+            "name": "I login with email \"testuser@example.com\" and password \"WrongPassword123!\"",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:138"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 47,
+            "name": "the login should fail",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:168"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 48,
+            "name": "I should receive error status 401",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:98"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 49,
+            "name": "the error message should contain \"Invalid credentials\"",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:105"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@authentication",
+            "line": 1
+          },
+          {
+            "name": "@login",
+            "line": 43
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "user-authentication;protected-endpoint-requires-valid-token",
+        "keyword": "Scenario",
+        "line": 52,
+        "name": "Protected endpoint requires valid token",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "the application is initialized",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:10"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 9,
+            "name": "the database is accessible",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:14"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 53,
+            "name": "I am not authenticated",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:176"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 54,
+            "name": "I attempt to access a protected endpoint",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:195"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 55,
+            "name": "I should receive error status 401",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:98"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 56,
+            "name": "the error message should contain \"authentication\"",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:105"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@authentication",
+            "line": 1
+          },
+          {
+            "name": "@token",
+            "line": 51
+          },
+          {
+            "name": "@smoke",
+            "line": 51
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "user-authentication;protected-endpoint-accepts-valid-token",
+        "keyword": "Scenario",
+        "line": 59,
+        "name": "Protected endpoint accepts valid token",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "the application is initialized",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:10"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 9,
+            "name": "the database is accessible",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:14"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 60,
+            "name": "a user with email \"testuser@example.com\" and password \"ValidPass123!\" exists",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:123"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 61,
+            "name": "I am logged in as \"testuser@example.com\"",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:181"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 62,
+            "name": "I access a protected endpoint",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:204"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 63,
+            "name": "the request should be successful",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:218"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 64,
+            "name": "I should receive data",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:223"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@authentication",
+            "line": 1
+          },
+          {
+            "name": "@token",
+            "line": 58
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "id": "user-authentication",
+    "line": 2,
+    "keyword": "Feature",
+    "name": "User Authentication",
+    "tags": [
+      {
+        "name": "@authentication",
+        "line": 1
+      }
+    ],
+    "uri": "features\\authentication.feature"
+  },
+  {
+    "description": "  As a system administrator\n  I want to ensure data is validated correctly\n  So that only valid data is accepted",
+    "elements": [
+      {
+        "description": "",
+        "id": "data-validation;email-validation",
+        "keyword": "Scenario Outline",
+        "line": 15,
+        "name": "Email validation",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 9,
+            "name": "I have an email validator",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:9"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 10,
+            "name": "I validate email \"test@example.com\"",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:14"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 11,
+            "name": "the result should be true",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:18"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@validation",
+            "line": 1
+          },
+          {
+            "name": "@email-validation",
+            "line": 7
+          },
+          {
+            "name": "@smoke",
+            "line": 7
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "data-validation;email-validation",
+        "keyword": "Scenario Outline",
+        "line": 16,
+        "name": "Email validation",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 9,
+            "name": "I have an email validator",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:9"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 10,
+            "name": "I validate email \"user.name@subdomain.example.co.uk\"",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:14"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 11,
+            "name": "the result should be true",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:18"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@validation",
+            "line": 1
+          },
+          {
+            "name": "@email-validation",
+            "line": 7
+          },
+          {
+            "name": "@smoke",
+            "line": 7
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "data-validation;email-validation",
+        "keyword": "Scenario Outline",
+        "line": 17,
+        "name": "Email validation",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 9,
+            "name": "I have an email validator",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:9"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 10,
+            "name": "I validate email \"invalid\"",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:14"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 11,
+            "name": "the result should be false",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:18"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@validation",
+            "line": 1
+          },
+          {
+            "name": "@email-validation",
+            "line": 7
+          },
+          {
+            "name": "@smoke",
+            "line": 7
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "data-validation;email-validation",
+        "keyword": "Scenario Outline",
+        "line": 18,
+        "name": "Email validation",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 9,
+            "name": "I have an email validator",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:9"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 10,
+            "name": "I validate email \"invalid@\"",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:14"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 11,
+            "name": "the result should be false",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:18"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@validation",
+            "line": 1
+          },
+          {
+            "name": "@email-validation",
+            "line": 7
+          },
+          {
+            "name": "@smoke",
+            "line": 7
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "data-validation;email-validation",
+        "keyword": "Scenario Outline",
+        "line": 19,
+        "name": "Email validation",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 9,
+            "name": "I have an email validator",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:9"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 10,
+            "name": "I validate email \"@example.com\"",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:14"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 11,
+            "name": "the result should be false",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:18"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@validation",
+            "line": 1
+          },
+          {
+            "name": "@email-validation",
+            "line": 7
+          },
+          {
+            "name": "@smoke",
+            "line": 7
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "data-validation;email-validation",
+        "keyword": "Scenario Outline",
+        "line": 20,
+        "name": "Email validation",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 9,
+            "name": "I have an email validator",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:9"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 10,
+            "name": "I validate email \"test@example\"",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:14"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 11,
+            "name": "the result should be false",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:18"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@validation",
+            "line": 1
+          },
+          {
+            "name": "@email-validation",
+            "line": 7
+          },
+          {
+            "name": "@smoke",
+            "line": 7
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "data-validation;password-validation",
+        "keyword": "Scenario Outline",
+        "line": 30,
+        "name": "Password validation",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 24,
+            "name": "I have a password validator",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:30"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 25,
+            "name": "I validate password \"ValidPass123!\"",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:35"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 26,
+            "name": "the validation result should be true",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:39"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@validation",
+            "line": 1
+          },
+          {
+            "name": "@password-validation",
+            "line": 22
+          },
+          {
+            "name": "@smoke",
+            "line": 22
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "data-validation;password-validation",
+        "keyword": "Scenario Outline",
+        "line": 31,
+        "name": "Password validation",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 24,
+            "name": "I have a password validator",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:30"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 25,
+            "name": "I validate password \"MyPassword456@\"",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:35"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 26,
+            "name": "the validation result should be true",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:39"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@validation",
+            "line": 1
+          },
+          {
+            "name": "@password-validation",
+            "line": 22
+          },
+          {
+            "name": "@smoke",
+            "line": 22
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "data-validation;password-validation",
+        "keyword": "Scenario Outline",
+        "line": 32,
+        "name": "Password validation",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 24,
+            "name": "I have a password validator",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:30"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 25,
+            "name": "I validate password \"weak\"",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:35"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 26,
+            "name": "the validation result should be false",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:39"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@validation",
+            "line": 1
+          },
+          {
+            "name": "@password-validation",
+            "line": 22
+          },
+          {
+            "name": "@smoke",
+            "line": 22
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "data-validation;password-validation",
+        "keyword": "Scenario Outline",
+        "line": 33,
+        "name": "Password validation",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 24,
+            "name": "I have a password validator",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:30"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 25,
+            "name": "I validate password \"NoNumber!\"",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:35"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 26,
+            "name": "the validation result should be false",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:39"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@validation",
+            "line": 1
+          },
+          {
+            "name": "@password-validation",
+            "line": 22
+          },
+          {
+            "name": "@smoke",
+            "line": 22
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "data-validation;password-validation",
+        "keyword": "Scenario Outline",
+        "line": 34,
+        "name": "Password validation",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 24,
+            "name": "I have a password validator",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:30"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 25,
+            "name": "I validate password \"NoSpecial123\"",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:35"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 26,
+            "name": "the validation result should be false",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:39"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@validation",
+            "line": 1
+          },
+          {
+            "name": "@password-validation",
+            "line": 22
+          },
+          {
+            "name": "@smoke",
+            "line": 22
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "data-validation;password-validation",
+        "keyword": "Scenario Outline",
+        "line": 35,
+        "name": "Password validation",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 24,
+            "name": "I have a password validator",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:30"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 25,
+            "name": "I validate password \"nouppercase123!\"",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:35"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 26,
+            "name": "the validation result should be false",
+            "match": {
+              "location": "features\\step_definitions\\validation.steps.js:39"
+            },
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "skipped",
+              "duration": 0
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@validation",
+            "line": 1
+          },
+          {
+            "name": "@password-validation",
+            "line": 22
+          },
+          {
+            "name": "@smoke",
+            "line": 22
+          }
+        ],
+        "type": "scenario"
+      }
+    ],
+    "id": "data-validation",
+    "line": 2,
+    "keyword": "Feature",
+    "name": "Data Validation",
+    "tags": [
+      {
+        "name": "@validation",
+        "line": 1
+      }
+    ],
+    "uri": "features\\validation.feature"
+  }
+]
