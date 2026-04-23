@@ -59,3 +59,26 @@ CREATE TABLE IF NOT EXISTS inferences (
 CREATE INDEX IF NOT EXISTS idx_inferences_user_id ON inferences(user_id);
 CREATE INDEX IF NOT EXISTS idx_inferences_status ON inferences(status);
 CREATE INDEX IF NOT EXISTS idx_inferences_created_at ON inferences(created_at);
+
+-- Multi-model comparisons (parent + per-model child rows)
+CREATE TABLE IF NOT EXISTS comparisons (
+    comparison_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    user_id UUID NOT NULL REFERENCES users(user_id) ON DELETE CASCADE,
+    prompt TEXT NOT NULL,
+    status VARCHAR(30) NOT NULL DEFAULT 'pending',
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE IF NOT EXISTS comparison_responses (
+    comparison_response_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+    comparison_id UUID NOT NULL REFERENCES comparisons(comparison_id) ON DELETE CASCADE,
+    model VARCHAR(100) NOT NULL,
+    response TEXT,
+    status VARCHAR(30) NOT NULL DEFAULT 'pending',
+    execution_time_ms INTEGER,
+    error_message TEXT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE INDEX IF NOT EXISTS idx_comparisons_user_created ON comparisons(user_id, created_at DESC);
+CREATE INDEX IF NOT EXISTS idx_comparison_responses_parent ON comparison_responses(comparison_id);

@@ -70,8 +70,32 @@ async function setupApiMocks(page, { email, token = 'fake-jwt-token' } = {}) {
       return;
     }
 
-    if (url.startsWith(apiUrl('/inference')) && method === 'GET') {
-      // /inference?limit=10 and /inference/:id
+    if (method === 'GET' && url.startsWith(apiUrl('/inference'))) {
+      if (url.includes('/inference/comparisons?')) {
+        respondJson(200, {
+          success: true,
+          data: [],
+          pagination: { total: 0, limit: 10, offset: 0 },
+        });
+        return;
+      }
+      const comparisonDetail = url.match(/\/inference\/comparisons\/([^/?]+)/);
+      if (comparisonDetail) {
+        respondJson(200, {
+          success: true,
+          data: {
+            comparisonId: comparisonDetail[1],
+            prompt: 'Mock comparison prompt',
+            status: 'completed',
+            createdAt: new Date().toISOString(),
+            results: [
+              { model: 'gpt-4', status: 'completed', response: 'Mock A', executionTimeMs: 10, errorMessage: null },
+              { model: 'claude-v1', status: 'completed', response: 'Mock B', executionTimeMs: 12, errorMessage: null },
+            ],
+          },
+        });
+        return;
+      }
       if (url.includes('/inference?')) {
         respondJson(200, { success: true, data: [] });
         return;
@@ -85,6 +109,28 @@ async function setupApiMocks(page, { email, token = 'fake-jwt-token' } = {}) {
           response: 'Test response',
           createdAt: new Date().toISOString(),
           completedAt: new Date().toISOString(),
+        },
+      });
+      return;
+    }
+
+    if (method === 'DELETE' && url.startsWith(apiUrl('/inference/comparisons/'))) {
+      respondJson(200, { success: true, message: 'Comparison deleted successfully' });
+      return;
+    }
+
+    if (url === apiUrl('/inference/compare') && method === 'POST') {
+      respondJson(201, {
+        success: true,
+        data: {
+          comparisonId: 'cmp-e2e',
+          prompt: 'Explain photosynthesis simply',
+          status: 'completed',
+          createdAt: new Date().toISOString(),
+          results: [
+            { model: 'gpt-4', status: 'completed', response: 'Mock gpt-4', executionTimeMs: 8, errorMessage: null },
+            { model: 'claude-v1', status: 'completed', response: 'Mock claude', executionTimeMs: 9, errorMessage: null },
+          ],
         },
       });
       return;
@@ -155,12 +201,35 @@ async function testLoginSuccessRedirectsToDashboard({ page }) {
   assert.strictEqual(displayed, email);
 }
 
+async function testDashboardCompareSubmitsTwoModels({ page }) {
+  const email = `compare_${Date.now()}@example.com`;
+  await setupApiMocks(page, { email });
+
+  await page.goto('http://localhost:5500/login.html', { waitUntil: 'domcontentloaded' });
+  await page.type('#email', email);
+  await page.type('#password', 'ValidPass123!');
+  await page.click('button[type="submit"]');
+  await page.waitForFunction(() => window.location.href.includes('dashboard.html'), { timeout: 20000 });
+
+  await page.click('[data-mode="compare"]');
+  await page.waitForSelector('#compareModeContainer:not(.hidden)');
+
+  await page.click('input[name="compareModel"][value="gpt-4"]');
+  await page.click('input[name="compareModel"][value="claude-v1"]');
+  await page.type('#comparePromptInput', 'Explain photosynthesis simply');
+  await page.click('#compareForm button[type="submit"]');
+
+  await page.waitForSelector('.comparison-card[data-model="gpt-4"] .response-text');
+  await page.waitForSelector('.comparison-card[data-model="claude-v1"] .response-text');
+}
+
 async function runAll({ headed = false } = {}) {
   const tests = [
     ['Dashboard redirects to login without token', testDashboardRedirectsToLoginWhenNotAuthenticated],
     ['Signup rejects weak password client-side', testSignupRejectsWeakPasswordClientSide],
     ['Signup success redirects and displays user', testSignupSuccessRedirectsToDashboardAndShowsUser],
     ['Login success redirects and displays user', testLoginSuccessRedirectsToDashboard],
+    ['Dashboard compare mode submits two models', testDashboardCompareSubmitsTwoModels],
   ];
 
   for (const [name, fn] of tests) {

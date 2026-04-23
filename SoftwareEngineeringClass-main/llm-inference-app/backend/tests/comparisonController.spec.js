@@ -1,219 +1,196 @@
 const ComparisonController = require('../src/controllers/comparisonController');
 const ComparisonService = require('../src/services/comparisonService');
-const { validationResult } = require('express-validator');
-
-// Mock the ComparisonService
-jest.mock('../src/services/comparisonService');
 
 describe('ComparisonController', () => {
-    let mockReq, mockRes, mockNext;
+  let req;
+  let res;
 
-    beforeEach(() => {
-        mockReq = {
-            user: { userId: 'user-123' },
-            body: {},
-            params: {}
-        };
+  beforeEach(() => {
+    req = {
+      user: { userId: 'user-123' },
+      body: {},
+      params: {},
+      query: {}
+    };
+    res = jasmine.createSpyObj('res', ['status', 'json']);
+    res.status.and.returnValue(res);
+    res.json.and.returnValue(res);
+  });
 
-        mockRes = {
-            status: jest.fn().mockReturnThis(),
-            json: jest.fn().mockReturnThis()
-        };
+  describe('submitComparison', () => {
+    it('returns 201 for a valid comparison request', async () => {
+      req.body = {
+        prompt: 'Valid prompt here',
+        models: ['gpt-4', 'claude-v1']
+      };
 
-        mockNext = jest.fn();
+      const completed = {
+        comparisonId: 'cmp_123',
+        prompt: 'Valid prompt here',
+        status: 'completed',
+        createdAt: new Date().toISOString(),
+        results: [
+          { model: 'gpt-4', status: 'completed', response: 'A', executionTimeMs: 10, errorMessage: null },
+          { model: 'claude-v1', status: 'completed', response: 'B', executionTimeMs: 12, errorMessage: null }
+        ]
+      };
 
-        jest.clearAllMocks();
+      spyOn(ComparisonService, 'createComparison').and.returnValue(
+        Promise.resolve({
+          comparisonId: 'cmp_123',
+          prompt: 'Valid prompt here',
+          models: ['gpt-4', 'claude-v1'],
+          status: 'pending',
+          createdAt: new Date().toISOString(),
+          results: []
+        })
+      );
+      spyOn(ComparisonService, 'runInferenceForComparison').and.returnValue(Promise.resolve());
+      spyOn(ComparisonService, 'getComparison').and.returnValue(Promise.resolve(completed));
+      spyOn(ComparisonService, 'normalizeForDashboard').and.returnValue(completed);
+
+      await ComparisonController.submitComparison(req, res);
+
+      expect(ComparisonService.runInferenceForComparison).toHaveBeenCalled();
+      expect(ComparisonService.getComparison).toHaveBeenCalledWith('cmp_123', 'user-123');
+      expect(res.status).toHaveBeenCalledWith(201);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Comparison request submitted',
+        data: completed
+      });
     });
 
-    describe('submitComparison', () => {
-        it('returns 201 for a valid comparison request', async () => {
-            mockReq.body = {
-                prompt: 'Valid prompt here',
-                models: ['gpt-4', 'claude-v1']
-            };
+    it('returns 400 when service validation rejects the payload', async () => {
+      req.body = {
+        prompt: 'Valid prompt here',
+        models: ['gpt-4', 'gpt-4']
+      };
 
-            const mockComparison = {
-                comparisonId: 'cmp_123',
-                prompt: 'Valid prompt here',
-                models: ['gpt-4', 'claude-v1'],
-                status: 'pending',
-                createdAt: new Date().toISOString(),
-                results: [
-                    { model: 'gpt-4', status: 'pending', response: null, executionTimeMs: null, errorMessage: null },
-                    { model: 'claude-v1', status: 'pending', response: null, executionTimeMs: null, errorMessage: null }
-                ]
-            };
+      const err = new Error('Duplicate models are not allowed');
+      err.status = 400;
+      spyOn(ComparisonService, 'createComparison').and.returnValue(Promise.reject(err));
 
-            ComparisonService.createComparison.mockResolvedValue(mockComparison);
-            ComparisonService.normalizeForDashboard.mockReturnValue(mockComparison);
+      await ComparisonController.submitComparison(req, res);
 
-            // Mock validationResult to return no errors
-            jest.spyOn(require('express-validator'), 'validationResult').mockReturnValue({
-                isEmpty: () => true,
-                array: () => []
-            });
+      expect(res.status).toHaveBeenCalledWith(400);
+      expect(res.json).toHaveBeenCalledWith(
+        jasmine.objectContaining({
+          success: false,
+          error: { code: 'VALIDATION_ERROR' }
+        })
+      );
+    });
+  });
 
-            await ComparisonController.submitComparison(mockReq, mockRes);
+  describe('getComparison', () => {
+    it('returns 200 with comparison data', async () => {
+      req.params = { comparisonId: 'cmp_123' };
 
-            expect(mockRes.status).toHaveBeenCalledWith(201);
-            expect(mockRes.json).toHaveBeenCalledWith({
-                success: true,
-                message: 'Comparison request submitted',
-                data: mockComparison
-            });
-        });
+      const payload = {
+        comparisonId: 'cmp_123',
+        prompt: 'Test prompt',
+        status: 'completed',
+        createdAt: new Date().toISOString(),
+        results: [
+          { model: 'gpt-4', status: 'completed', response: 'Response', executionTimeMs: 100, errorMessage: null }
+        ]
+      };
 
-        it('returns 400 when prompt is too short', async () => {
-            mockReq.body = {
-                prompt: 'hi',
-                models: ['gpt-4', 'claude-v1']
-            };
+      spyOn(ComparisonService, 'getComparison').and.returnValue(Promise.resolve(payload));
+      spyOn(ComparisonService, 'normalizeForDashboard').and.returnValue(payload);
 
-            const error = new Error('Prompt must be at least 5 characters');
-            error.status = 400;
-            ComparisonService.createComparison.mockRejectedValue(error);
+      await ComparisonController.getComparison(req, res);
 
-            jest.spyOn(require('express-validator'), 'validationResult').mockReturnValue({
-                isEmpty: () => true,
-                array: () => []
-            });
-
-            await ComparisonController.submitComparison(mockReq, mockRes);
-
-            expect(mockRes.status).toHaveBeenCalledWith(400);
-            expect(mockRes.json).toHaveBeenCalledWith(
-                expect.objectContaining({
-                    success: false,
-                    error: { code: 'VALIDATION_ERROR' }
-                })
-            );
-        });
-
-        it('returns 400 when no models are selected', async () => {
-            mockReq.body = {
-                prompt: 'Valid prompt here',
-                models: []
-            };
-
-            const error = new Error('At least 2 models must be selected');
-            error.status = 400;
-            ComparisonService.createComparison.mockRejectedValue(error);
-
-            jest.spyOn(require('express-validator'), 'validationResult').mockReturnValue({
-                isEmpty: () => true,
-                array: () => []
-            });
-
-            await ComparisonController.submitComparison(mockReq, mockRes);
-
-            expect(mockRes.status).toHaveBeenCalledWith(400);
-        });
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Comparison retrieved successfully',
+        data: payload
+      });
     });
 
-    describe('getComparison', () => {
-        it('returns 200 with comparison data', async () => {
-            mockReq.params = { comparisonId: 'cmp_123' };
+    it('returns 404 when comparison not found', async () => {
+      req.params = { comparisonId: 'nonexistent' };
 
-            const mockComparison = {
-                comparisonId: 'cmp_123',
-                prompt: 'Test prompt',
-                status: 'completed',
-                createdAt: new Date().toISOString(),
-                results: [
-                    { model: 'gpt-4', status: 'completed', response: 'Response', executionTimeMs: 100, errorMessage: null }
-                ]
-            };
+      const err = new Error('Comparison not found');
+      err.status = 404;
+      spyOn(ComparisonService, 'getComparison').and.returnValue(Promise.reject(err));
 
-            ComparisonService.getComparison.mockResolvedValue(mockComparison);
-            ComparisonService.normalizeForDashboard.mockReturnValue(mockComparison);
+      await ComparisonController.getComparison(req, res);
 
-            await ComparisonController.getComparison(mockReq, mockRes);
+      expect(res.status).toHaveBeenCalledWith(404);
+      expect(res.json).toHaveBeenCalledWith(
+        jasmine.objectContaining({
+          success: false,
+          message: 'Comparison not found',
+          error: { code: 'COMPARISON_NOT_FOUND' }
+        })
+      );
+    });
+  });
 
-            expect(mockRes.status).toHaveBeenCalledWith(200);
-            expect(mockRes.json).toHaveBeenCalledWith({
-                success: true,
-                message: 'Comparison retrieved successfully',
-                data: mockComparison
-            });
-        });
+  describe('getComparisonHistory', () => {
+    it('returns comparison history with pagination', async () => {
+      req.query = { limit: '10', offset: '0' };
 
-        it('returns 404 when comparison not found', async () => {
-            mockReq.params = { comparisonId: 'nonexistent' };
+      const mockHistory = {
+        data: [
+          {
+            comparisonId: 'cmp_1',
+            prompt: 'Test 1',
+            status: 'completed',
+            createdAt: new Date().toISOString()
+          }
+        ],
+        total: 1,
+        limit: 10,
+        offset: 0
+      };
 
-            ComparisonService.getComparison.mockRejectedValue(new Error('Comparison not found'));
+      spyOn(ComparisonService, 'getComparisonHistory').and.returnValue(Promise.resolve(mockHistory));
 
-            await ComparisonController.getComparison(mockReq, mockRes);
+      await ComparisonController.getComparisonHistory(req, res);
 
-            expect(mockRes.status).toHaveBeenCalledWith(404);
-            expect(mockRes.json).toHaveBeenCalledWith(
-                expect.objectContaining({
-                    success: false,
-                    message: 'Comparison not found',
-                    error: { code: 'COMPARISON_NOT_FOUND' }
-                })
-            );
-        });
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Comparison history retrieved successfully',
+        data: mockHistory.data,
+        pagination: {
+          total: 1,
+          limit: 10,
+          offset: 0
+        }
+      });
+    });
+  });
+
+  describe('deleteComparison', () => {
+    it('returns 200 when comparison is deleted', async () => {
+      req.params = { comparisonId: 'cmp_123' };
+
+      spyOn(ComparisonService, 'deleteComparison').and.returnValue(Promise.resolve({ success: true }));
+
+      await ComparisonController.deleteComparison(req, res);
+
+      expect(res.status).toHaveBeenCalledWith(200);
+      expect(res.json).toHaveBeenCalledWith({
+        success: true,
+        message: 'Comparison deleted successfully'
+      });
     });
 
-    describe('getComparisonHistory', () => {
-        it('returns comparison history with pagination', async () => {
-            mockReq.query = { limit: '10', offset: '0' };
+    it('returns 404 when comparison not found for deletion', async () => {
+      req.params = { comparisonId: 'nonexistent' };
 
-            const mockHistory = {
-                data: [
-                    {
-                        comparisonId: 'cmp_1',
-                        prompt: 'Test 1',
-                        status: 'completed',
-                        createdAt: new Date().toISOString()
-                    }
-                ],
-                total: 1,
-                limit: 10,
-                offset: 0
-            };
+      const err = new Error('Comparison not found');
+      err.status = 404;
+      spyOn(ComparisonService, 'deleteComparison').and.returnValue(Promise.reject(err));
 
-            ComparisonService.getComparisonHistory.mockResolvedValue(mockHistory);
+      await ComparisonController.deleteComparison(req, res);
 
-            await ComparisonController.getComparisonHistory(mockReq, mockRes);
-
-            expect(mockRes.status).toHaveBeenCalledWith(200);
-            expect(mockRes.json).toHaveBeenCalledWith({
-                success: true,
-                message: 'Comparison history retrieved successfully',
-                data: mockHistory.data,
-                pagination: {
-                    total: 1,
-                    limit: 10,
-                    offset: 0
-                }
-            });
-        });
+      expect(res.status).toHaveBeenCalledWith(404);
     });
-
-    describe('deleteComparison', () => {
-        it('returns 200 when comparison is deleted', async () => {
-            mockReq.params = { comparisonId: 'cmp_123' };
-
-            ComparisonService.deleteComparison.mockResolvedValue({ success: true });
-
-            await ComparisonController.deleteComparison(mockReq, mockRes);
-
-            expect(mockRes.status).toHaveBeenCalledWith(200);
-            expect(mockRes.json).toHaveBeenCalledWith({
-                success: true,
-                message: 'Comparison deleted successfully'
-            });
-        });
-
-        it('returns 404 when comparison not found for deletion', async () => {
-            mockReq.params = { comparisonId: 'nonexistent' };
-
-            ComparisonService.deleteComparison.mockRejectedValue(new Error('Comparison not found'));
-
-            await ComparisonController.deleteComparison(mockReq, mockRes);
-
-            expect(mockRes.status).toHaveBeenCalledWith(404);
-        });
-    });
+  });
 });

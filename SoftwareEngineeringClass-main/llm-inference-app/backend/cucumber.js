@@ -7,6 +7,7 @@ module.exports = {
   default: {
     // Path to step definitions
     require: [
+      'features/support/env.js',
       'features/support/**/*.js',
       'features/step_definitions/**/*.js'
     ],
@@ -26,6 +27,7 @@ module.exports = {
   // Profile for smoke tests
   smoke: {
     require: [
+      'features/support/env.js',
       'features/support/**/*.js',
       'features/step_definitions/**/*.js'
     ],

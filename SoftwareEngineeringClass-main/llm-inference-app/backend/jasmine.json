@@ -3,7 +3,9 @@
   "spec_files": [
     "**/*[sS]pec.js"
   ],
-  "helpers": [],
+  "helpers": [
+    "tests/helpers/testEnv.js"
+  ],
   "stopSpecOnExpectationFailure": false,
   "random": false
 }

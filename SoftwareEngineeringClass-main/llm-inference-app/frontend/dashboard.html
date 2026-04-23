@@ -81,23 +81,24 @@
                 <div class="mode-container hidden" id="compareModeContainer">
                     <div class="compare-controls">
                         <div class="model-selector">
-                            <h3>Select Models to Compare</h3>
+                            <h3>Select models to compare</h3>
+                            <p class="model-selector-hint">Choose two or more models, then enter one prompt.</p>
                             <div class="model-checkboxes">
                                 <label class="model-checkbox">
-                                    <input type="checkbox" name="model" value="gpt-3.5-turbo">
+                                    <input type="checkbox" name="compareModel" value="gpt-3.5-turbo">
                                     <span>GPT-3.5 Turbo</span>
                                 </label>
                                 <label class="model-checkbox">
-                                    <input type="checkbox" name="model" value="gpt-4">
+                                    <input type="checkbox" name="compareModel" value="gpt-4">
                                     <span>GPT-4</span>
                                 </label>
                                 <label class="model-checkbox">
-                                    <input type="checkbox" name="model" value="claude-v1">
+                                    <input type="checkbox" name="compareModel" value="claude-v1">
                                     <span>Claude v1</span>
                                 </label>
                                 <label class="model-checkbox">
-                                    <input type="checkbox" name="model" value="local-small">
-                                    <span>Local Small</span>
+                                    <input type="checkbox" name="compareModel" value="local-small">
+                                    <span>Local (Ollama)</span>
                                 </label>
                             </div>
                             <span class="error-message" id="modelError"></span>
@@ -112,6 +113,7 @@
                     </div>
 
                     <div class="chat-input-area">
+                        <div id="compareNotice" class="notice-banner hidden" role="status" aria-live="polite"></div>
                         <form id="compareForm" class="chat-form">
                             <div class="chat-form-row">
                                 <textarea 

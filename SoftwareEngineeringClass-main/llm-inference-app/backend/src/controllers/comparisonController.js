@@ -28,10 +28,19 @@ class ComparisonController {
         maxTokens
       );
 
+      await ComparisonService.runInferenceForComparison(
+        comparison.comparisonId,
+        prompt,
+        temperature,
+        maxTokens
+      );
+
+      const completed = await ComparisonService.getComparison(comparison.comparisonId, userId);
+
       return res.status(201).json({
         success: true,
         message: 'Comparison request submitted',
-        data: ComparisonService.normalizeForDashboard(comparison)
+        data: ComparisonService.normalizeForDashboard(completed)
       });
     } catch (error) {
       console.error('Submit comparison error:', error);
@@ -70,7 +79,7 @@ class ComparisonController {
     } catch (error) {
       console.error('Get comparison error:', error);
 
-      if (error.message === 'Comparison not found') {
+      if (error.message === 'Comparison not found' || error.status === 404) {
         return res.status(404).json({
           success: false,
           message: 'Comparison not found',
@@ -134,7 +143,7 @@ class ComparisonController {
     } catch (error) {
       console.error('Delete comparison error:', error);
 
-      if (error.message === 'Comparison not found') {
+      if (error.message === 'Comparison not found' || error.status === 404) {
         return res.status(404).json({
           success: false,
           message: 'Comparison not found',

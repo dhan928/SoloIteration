@@ -2,6 +2,8 @@
 
 Simple web app for running LLM inferences. Uses Supabase for data and a Node REST API for communication.
 
+**Run guide (install, `.env`, dev servers, tests, one zip):** [`RUN.md`](../RUN.md). If your Git root is above `SoftwareEngineeringClass-main` (e.g. `SoloIteration`), use **[`RUN.md`](../../RUN.md)** there instead.
+
 ## Setup
 
 ### Backend
@@ -25,7 +27,7 @@ Open `http://127.0.0.1:5500` in your browser.
 
 ## Configuration
 
-Create `backend/.env`:
+Create `backend/.env` (see `.env.example` for the full list):
 
 ```
 SUPABASE_URL=https://your-project.supabase.co
@@ -34,6 +36,8 @@ JWT_SECRET=your-secret-key
 PORT=3000
 CORS_ORIGIN=http://127.0.0.1:5500
 ```
+
+**Compare mode — real LLMs:** set **`OPENROUTER_API_KEY`** so GPT / Claude options use [OpenRouter](https://openrouter.ai/). Set **`OLLAMA_BASE_URL`** (and optionally **`OLLAMA_MODEL`**) so **Local (Ollama)** uses a local [Ollama](https://ollama.com/) model. If unset, the server uses a small **stub** for demos/tests.
 
 Get your Supabase URL and key from the Supabase dashboard.
 

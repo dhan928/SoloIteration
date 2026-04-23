@@ -1,20 +1,28 @@
 [
   {
-    "description": "  As a new user\n  I want to create an account and authenticate\n  So that I can access the LLM inference application",
+    "description": "  As a logged-in user\n  I want to submit one prompt to multiple models\n  So that I can compare answers side by side",
     "elements": [
       {
         "description": "",
-        "id": "user-authentication;successful-user-registration",
+        "id": "compare-multiple-llms-simultaneously;successful-comparison-across-multiple-models",
         "keyword": "Scenario",
-        "line": 12,
-        "name": "Successful user registration",
+        "line": 13,
+        "name": "Successful comparison across multiple models",
         "steps": [
           {
             "keyword": "Before",
             "hidden": true,
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 921500
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 48799
             }
           },
           {
@@ -26,8 +34,8 @@
               "location": "features\\step_definitions\\authentication.steps.js:10"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 4523599
             }
           },
           {
@@ -39,113 +47,181 @@
               "location": "features\\step_definitions\\authentication.steps.js:14"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 1737500
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 10,
+            "name": "I am logged in as a test user",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:16"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 908299
             }
           },
           {
             "arguments": [],
             "keyword": "Given ",
-            "line": 13,
-            "name": "I don't have an existing account",
+            "line": 14,
+            "name": "I am on the dashboard",
             "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:24"
+              "location": "features\\step_definitions\\compare_models.steps.js:20"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 396899
             }
           },
           {
             "arguments": [],
             "keyword": "When ",
-            "line": 14,
-            "name": "I register with email \"testuser@example.com\" and password \"ValidPass123!\"",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:39"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
             "line": 15,
-            "name": "my account should be created successfully",
+            "name": "I select \"gpt-4\" and \"claude-v1\" for comparison",
             "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:64"
+              "location": "features\\step_definitions\\compare_models.steps.js:28"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 3166399
             }
           },
           {
             "arguments": [],
             "keyword": "And ",
             "line": 16,
-            "name": "I should receive a user ID",
+            "name": "I type \"Explain photosynthesis simply\" in the comparison prompt input",
             "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:70"
+              "location": "features\\step_definitions\\compare_models.steps.js:40"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 1948099
             }
           },
           {
             "arguments": [],
             "keyword": "And ",
             "line": 17,
-            "name": "I should be able to login with those credentials",
+            "name": "I click the Compare button",
             "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:75"
+              "location": "features\\step_definitions\\compare_models.steps.js:48"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 1871600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 18,
+            "name": "I should see a response card for \"gpt-4\"",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:75"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1327299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 19,
+            "name": "I should see a response card for \"claude-v1\"",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:75"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 754400
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 20,
+            "name": "the comparison should be saved in history",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:101"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1810400
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 21,
+            "name": "I should see both models in the comparison history",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:105"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1330600
             }
           },
           {
             "keyword": "After",
             "hidden": true,
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 452099
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 143900
             }
           }
         ],
         "tags": [
           {
-            "name": "@authentication",
+            "name": "@comparison",
             "line": 1
           },
           {
-            "name": "@registration",
-            "line": 11
+            "name": "@comparison",
+            "line": 12
           },
           {
             "name": "@smoke",
-            "line": 11
+            "line": 12
           }
         ],
         "type": "scenario"
       },
       {
         "description": "",
-        "id": "user-authentication;registration-fails-with-duplicate-email",
+        "id": "compare-multiple-llms-simultaneously;comparison-request-fails-when-no-model-is-selected",
         "keyword": "Scenario",
-        "line": 20,
-        "name": "Registration fails with duplicate email",
+        "line": 24,
+        "name": "Comparison request fails when no model is selected",
         "steps": [
           {
             "keyword": "Before",
             "hidden": true,
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 312700
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 46699
             }
           },
           {
@@ -157,8 +233,8 @@
               "location": "features\\step_definitions\\authentication.steps.js:10"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 4775399
             }
           },
           {
@@ -170,236 +246,164 @@
               "location": "features\\step_definitions\\authentication.steps.js:14"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 1285700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 10,
+            "name": "I am logged in as a test user",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:16"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 548800
             }
           },
           {
             "arguments": [],
             "keyword": "Given ",
-            "line": 21,
-            "name": "a user with email \"existing@example.com\" already exists",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:29"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 22,
-            "name": "I attempt to register with email \"existing@example.com\" and password \"ValidPass123!\"",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:54"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 23,
-            "name": "the registration should fail",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:94"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 24,
-            "name": "I should receive error status 409",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:98"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
             "line": 25,
-            "name": "the error message should contain \"already exists\"",
+            "name": "I am on the dashboard",
             "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:105"
+              "location": "features\\step_definitions\\compare_models.steps.js:20"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          }
-        ],
-        "tags": [
-          {
-            "name": "@authentication",
-            "line": 1
-          },
-          {
-            "name": "@registration",
-            "line": 19
-          }
-        ],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "user-authentication;registration-fails-with-weak-password",
-        "keyword": "Scenario",
-        "line": 28,
-        "name": "Registration fails with weak password",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 8,
-            "name": "the application is initialized",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:10"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 379500
             }
           },
           {
             "arguments": [],
             "keyword": "And ",
-            "line": 9,
-            "name": "the database is accessible",
+            "line": 26,
+            "name": "I am in comparison mode",
             "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:14"
+              "location": "features\\step_definitions\\compare_models.steps.js:24"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 462700
             }
           },
           {
             "arguments": [],
-            "keyword": "Given ",
+            "keyword": "When ",
+            "line": 27,
+            "name": "I type \"Explain photosynthesis simply\" in the comparison prompt input",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:40"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2570600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 28,
+            "name": "I don't select any models",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:44"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1136099
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
             "line": 29,
-            "name": "I don't have an existing account",
+            "name": "I click the Compare button",
             "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:24"
+              "location": "features\\step_definitions\\compare_models.steps.js:48"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 30,
-            "name": "I attempt to register with email \"newuser@example.com\" and password \"weak\"",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:54"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 1035799
             }
           },
           {
             "arguments": [],
             "keyword": "Then ",
+            "line": 30,
+            "name": "I should see a validation error \"Please select at least 2 models\"",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:116"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3108299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
             "line": 31,
-            "name": "the registration should fail",
+            "name": "no comparison should be created",
             "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:94"
+              "location": "features\\step_definitions\\compare_models.steps.js:134"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 32,
-            "name": "I should receive error status 400",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:98"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 33,
-            "name": "the error message should contain \"password\"",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:105"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 1425799
             }
           },
           {
             "keyword": "After",
             "hidden": true,
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 528300
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 383799
             }
           }
         ],
         "tags": [
           {
-            "name": "@authentication",
+            "name": "@comparison",
             "line": 1
           },
           {
-            "name": "@registration",
-            "line": 27
+            "name": "@comparison",
+            "line": 23
           }
         ],
         "type": "scenario"
       },
       {
         "description": "",
-        "id": "user-authentication;user-login-with-valid-credentials",
+        "id": "compare-multiple-llms-simultaneously;comparison-request-fails-with-single-model-selection",
         "keyword": "Scenario",
-        "line": 36,
-        "name": "User login with valid credentials",
+        "line": 34,
+        "name": "Comparison request fails with single model selection",
         "steps": [
           {
             "keyword": "Before",
             "hidden": true,
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 212099
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 154799
             }
           },
           {
@@ -411,8 +415,8 @@
               "location": "features\\step_definitions\\authentication.steps.js:10"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 114800
             }
           },
           {
@@ -424,113 +428,164 @@
               "location": "features\\step_definitions\\authentication.steps.js:14"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 37,
-            "name": "a user with email \"testuser@example.com\" and password \"ValidPass123!\" exists",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:123"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 38,
-            "name": "I login with email \"testuser@example.com\" and password \"ValidPass123!\"",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:138"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 39,
-            "name": "I should receive an access token",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:148"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 208799
             }
           },
           {
             "arguments": [],
             "keyword": "And ",
-            "line": 40,
-            "name": "the token should contain my user information",
+            "line": 10,
+            "name": "I am logged in as a test user",
             "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:153"
+              "location": "features\\step_definitions\\compare_models.steps.js:16"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 102200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 35,
+            "name": "I am on the dashboard",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:20"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 71299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 36,
+            "name": "I am in comparison mode",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:24"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 72499
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 37,
+            "name": "I select \"gpt-4\" for comparison",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:32"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2043400
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 38,
+            "name": "I type \"Explain photosynthesis simply\" in the comparison prompt input",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:40"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 281700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 39,
+            "name": "I click the Compare button",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:48"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 73899
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 40,
+            "name": "I should see a validation error containing \"2 models\"",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:121"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2646499
             }
           },
           {
             "arguments": [],
             "keyword": "And ",
             "line": 41,
-            "name": "the login should succeed",
+            "name": "no comparison should be created",
             "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:163"
+              "location": "features\\step_definitions\\compare_models.steps.js:134"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 590699
             }
           },
           {
             "keyword": "After",
             "hidden": true,
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 410200
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 141799
             }
           }
         ],
         "tags": [
           {
-            "name": "@authentication",
+            "name": "@comparison",
             "line": 1
           },
           {
-            "name": "@login",
-            "line": 35
-          },
-          {
-            "name": "@smoke",
-            "line": 35
+            "name": "@comparison",
+            "line": 33
           }
         ],
         "type": "scenario"
       },
       {
         "description": "",
-        "id": "user-authentication;login-fails-with-wrong-password",
+        "id": "compare-multiple-llms-simultaneously;partial-failure-still-shows-successful-model-results",
         "keyword": "Scenario",
         "line": 44,
-        "name": "Login fails with wrong password",
+        "name": "Partial failure still shows successful model results",
         "steps": [
           {
             "keyword": "Before",
             "hidden": true,
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 174699
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 29599
             }
           },
           {
@@ -542,8 +597,8 @@
               "location": "features\\step_definitions\\authentication.steps.js:10"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 69899
             }
           },
           {
@@ -555,91 +610,164 @@
               "location": "features\\step_definitions\\authentication.steps.js:14"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 185600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 10,
+            "name": "I am logged in as a test user",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:16"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 67199
             }
           },
           {
             "arguments": [],
             "keyword": "Given ",
             "line": 45,
-            "name": "a user with email \"testuser@example.com\" and password \"ValidPass123!\" exists",
+            "name": "I am on the dashboard",
             "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:123"
+              "location": "features\\step_definitions\\compare_models.steps.js:20"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 48700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 46,
+            "name": "I am in comparison mode",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:24"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 372700
             }
           },
           {
             "arguments": [],
             "keyword": "When ",
-            "line": 46,
-            "name": "I login with email \"testuser@example.com\" and password \"WrongPassword123!\"",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:138"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
             "line": 47,
-            "name": "the login should fail",
+            "name": "I select \"gpt-4\" and \"local-small\" for comparison",
             "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:168"
+              "location": "features\\step_definitions\\compare_models.steps.js:28"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 176299
             }
           },
           {
             "arguments": [],
             "keyword": "And ",
             "line": 48,
-            "name": "I should receive error status 401",
+            "name": "I type \"Tell me a joke\" in the comparison prompt input",
             "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:98"
+              "location": "features\\step_definitions\\compare_models.steps.js:40"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 99800
             }
           },
           {
             "arguments": [],
             "keyword": "And ",
             "line": 49,
-            "name": "the error message should contain \"Invalid credentials\"",
+            "name": "I click the Compare button",
             "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:105"
+              "location": "features\\step_definitions\\compare_models.steps.js:48"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 67999
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 50,
+            "name": "I should see a response card for \"gpt-4\" with status \"completed\"",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:81"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1813300
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 51,
+            "name": "I should see a response card for \"local-small\" with status \"completed\" or \"failed\"",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:88"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2876099
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 52,
+            "name": "the successful model response should be visible",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:138"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1715100
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 53,
+            "name": "the failed model should show an error state",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:143"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1206699
             }
           },
           {
             "keyword": "After",
             "hidden": true,
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 243900
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 264499
             }
           }
         ],
         "tags": [
           {
-            "name": "@authentication",
+            "name": "@comparison",
             "line": 1
           },
           {
-            "name": "@login",
+            "name": "@comparison",
             "line": 43
           }
         ],
@@ -647,17 +775,25 @@
       },
       {
         "description": "",
-        "id": "user-authentication;protected-endpoint-requires-valid-token",
+        "id": "compare-multiple-llms-simultaneously;delete-comparison-from-history",
         "keyword": "Scenario",
-        "line": 52,
-        "name": "Protected endpoint requires valid token",
+        "line": 56,
+        "name": "Delete comparison from history",
         "steps": [
           {
             "keyword": "Before",
             "hidden": true,
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 282500
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 37100
             }
           },
           {
@@ -669,8 +805,8 @@
               "location": "features\\step_definitions\\authentication.steps.js:10"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 64900
             }
           },
           {
@@ -682,1189 +818,661 @@
               "location": "features\\step_definitions\\authentication.steps.js:14"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 162299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 10,
+            "name": "I am logged in as a test user",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:16"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 47199
             }
           },
           {
             "arguments": [],
             "keyword": "Given ",
-            "line": 53,
-            "name": "I am not authenticated",
+            "line": 57,
+            "name": "I am on the dashboard",
             "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:176"
+              "location": "features\\step_definitions\\compare_models.steps.js:20"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 61399
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 58,
+            "name": "I have created a comparison",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:149"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2089699
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 59,
+            "name": "I can see the comparison in history",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:177"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 925399
             }
           },
           {
             "arguments": [],
             "keyword": "When ",
-            "line": 54,
-            "name": "I attempt to access a protected endpoint",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:195"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 55,
-            "name": "I should receive error status 401",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:98"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 56,
-            "name": "the error message should contain \"authentication\"",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:105"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          }
-        ],
-        "tags": [
-          {
-            "name": "@authentication",
-            "line": 1
-          },
-          {
-            "name": "@token",
-            "line": 51
-          },
-          {
-            "name": "@smoke",
-            "line": 51
-          }
-        ],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "user-authentication;protected-endpoint-accepts-valid-token",
-        "keyword": "Scenario",
-        "line": 59,
-        "name": "Protected endpoint accepts valid token",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 8,
-            "name": "the application is initialized",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:10"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 9,
-            "name": "the database is accessible",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:14"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
             "line": 60,
-            "name": "a user with email \"testuser@example.com\" and password \"ValidPass123!\" exists",
+            "name": "I click the delete button on the comparison",
             "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:123"
+              "location": "features\\step_definitions\\compare_models.steps.js:185"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 705199
             }
           },
           {
             "arguments": [],
             "keyword": "And ",
             "line": 61,
-            "name": "I am logged in as \"testuser@example.com\"",
+            "name": "I confirm the deletion",
             "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:181"
+              "location": "features\\step_definitions\\compare_models.steps.js:190"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 62,
-            "name": "I access a protected endpoint",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:204"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 588500
             }
           },
           {
             "arguments": [],
             "keyword": "Then ",
-            "line": 63,
-            "name": "the request should be successful",
+            "line": 62,
+            "name": "the comparison should be removed from history",
             "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:218"
+              "location": "features\\step_definitions\\compare_models.steps.js:196"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 697399
             }
           },
           {
             "arguments": [],
             "keyword": "And ",
-            "line": 64,
-            "name": "I should receive data",
+            "line": 63,
+            "name": "a new comparison load should not include it",
             "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:223"
+              "location": "features\\step_definitions\\compare_models.steps.js:200"
             },
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 870799
             }
           },
           {
             "keyword": "After",
             "hidden": true,
             "result": {
-              "status": "skipped",
-              "duration": 0
+              "status": "passed",
+              "duration": 171999
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 119599
             }
           }
         ],
         "tags": [
           {
-            "name": "@authentication",
+            "name": "@comparison",
             "line": 1
           },
           {
-            "name": "@token",
-            "line": 58
+            "name": "@comparison",
+            "line": 55
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "compare-multiple-llms-simultaneously;reload-comparison-from-history",
+        "keyword": "Scenario",
+        "line": 66,
+        "name": "Reload comparison from history",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 367600
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 42699
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "the application is initialized",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:10"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 78399
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 9,
+            "name": "the database is accessible",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:14"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 145499
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 10,
+            "name": "I am logged in as a test user",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:16"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 55900
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 67,
+            "name": "I am on the dashboard",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:20"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 43499
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 68,
+            "name": "I have created a comparison with prompt \"What is machine learning?\"",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:163"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1311700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 69,
+            "name": "I can see the comparison in the history panel",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:181"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 6332600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 70,
+            "name": "I click on the comparison in the history",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:204"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 397100
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 71,
+            "name": "the comparison details should be reloaded",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:216"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 551500
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 72,
+            "name": "I should see the same prompt \"What is machine learning?\"",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:220"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1047699
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 73,
+            "name": "I should see all the model responses again",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:224"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 530799
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 137000
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 170200
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@comparison",
+            "line": 1
+          },
+          {
+            "name": "@comparison",
+            "line": 65
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "compare-multiple-llms-simultaneously;comparison-with-duplicate-model-selections-fails",
+        "keyword": "Scenario",
+        "line": 76,
+        "name": "Comparison with duplicate model selections fails",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 299899
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 31900
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "the application is initialized",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:10"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 59200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 9,
+            "name": "the database is accessible",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:14"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 128299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 10,
+            "name": "I am logged in as a test user",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:16"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 245400
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 77,
+            "name": "I am on the dashboard",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:20"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 54700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 78,
+            "name": "I am in comparison mode",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:24"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 47899
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 79,
+            "name": "I select \"gpt-4\" twice (attempt duplicate selection)",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:36"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 2410599
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 80,
+            "name": "the comparison should reject duplicate models",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:228"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1124800
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 493100
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 310500
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@comparison",
+            "line": 1
+          },
+          {
+            "name": "@comparison",
+            "line": 75
+          }
+        ],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "compare-multiple-llms-simultaneously;comparison-validates-minimum-prompt-length",
+        "keyword": "Scenario",
+        "line": 83,
+        "name": "Comparison validates minimum prompt length",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 358999
+            }
+          },
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 57999
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 8,
+            "name": "the application is initialized",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:10"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 138599
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 9,
+            "name": "the database is accessible",
+            "match": {
+              "location": "features\\step_definitions\\authentication.steps.js:14"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 210700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 10,
+            "name": "I am logged in as a test user",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:16"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 56100
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 84,
+            "name": "I am on the dashboard",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:20"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 32400
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 85,
+            "name": "I am in comparison mode",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:24"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 28000
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 86,
+            "name": "I select \"gpt-4\" and \"claude-v1\" for comparison",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:28"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 55700
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 87,
+            "name": "I type \"hi\" in the comparison prompt input",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:40"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 36299
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 88,
+            "name": "I click the Compare button",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:48"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 54200
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 89,
+            "name": "I should see a validation error about prompt length",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:126"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1030300
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 90,
+            "name": "no comparison should be created",
+            "match": {
+              "location": "features\\step_definitions\\compare_models.steps.js:134"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 490699
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 232700
+            }
+          },
+          {
+            "keyword": "After",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 165199
+            }
+          }
+        ],
+        "tags": [
+          {
+            "name": "@comparison",
+            "line": 1
+          },
+          {
+            "name": "@comparison",
+            "line": 82
           }
         ],
         "type": "scenario"
       }
     ],
-    "id": "user-authentication",
+    "id": "compare-multiple-llms-simultaneously",
     "line": 2,
     "keyword": "Feature",
-    "name": "User Authentication",
+    "name": "Compare Multiple LLMs Simultaneously",
     "tags": [
       {
-        "name": "@authentication",
+        "name": "@comparison",
         "line": 1
       }
     ],
-    "uri": "features\\authentication.feature"
-  },
-  {
-    "description": "  As a system administrator\n  I want to ensure data is validated correctly\n  So that only valid data is accepted",
-    "elements": [
-      {
-        "description": "",
-        "id": "data-validation;email-validation",
-        "keyword": "Scenario Outline",
-        "line": 15,
-        "name": "Email validation",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 9,
-            "name": "I have an email validator",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:9"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 10,
-            "name": "I validate email \"test@example.com\"",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:14"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 11,
-            "name": "the result should be true",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:18"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          }
-        ],
-        "tags": [
-          {
-            "name": "@validation",
-            "line": 1
-          },
-          {
-            "name": "@email-validation",
-            "line": 7
-          },
-          {
-            "name": "@smoke",
-            "line": 7
-          }
-        ],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "data-validation;email-validation",
-        "keyword": "Scenario Outline",
-        "line": 16,
-        "name": "Email validation",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 9,
-            "name": "I have an email validator",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:9"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 10,
-            "name": "I validate email \"user.name@subdomain.example.co.uk\"",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:14"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 11,
-            "name": "the result should be true",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:18"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          }
-        ],
-        "tags": [
-          {
-            "name": "@validation",
-            "line": 1
-          },
-          {
-            "name": "@email-validation",
-            "line": 7
-          },
-          {
-            "name": "@smoke",
-            "line": 7
-          }
-        ],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "data-validation;email-validation",
-        "keyword": "Scenario Outline",
-        "line": 17,
-        "name": "Email validation",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 9,
-            "name": "I have an email validator",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:9"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 10,
-            "name": "I validate email \"invalid\"",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:14"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 11,
-            "name": "the result should be false",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:18"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          }
-        ],
-        "tags": [
-          {
-            "name": "@validation",
-            "line": 1
-          },
-          {
-            "name": "@email-validation",
-            "line": 7
-          },
-          {
-            "name": "@smoke",
-            "line": 7
-          }
-        ],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "data-validation;email-validation",
-        "keyword": "Scenario Outline",
-        "line": 18,
-        "name": "Email validation",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 9,
-            "name": "I have an email validator",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:9"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 10,
-            "name": "I validate email \"invalid@\"",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:14"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 11,
-            "name": "the result should be false",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:18"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          }
-        ],
-        "tags": [
-          {
-            "name": "@validation",
-            "line": 1
-          },
-          {
-            "name": "@email-validation",
-            "line": 7
-          },
-          {
-            "name": "@smoke",
-            "line": 7
-          }
-        ],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "data-validation;email-validation",
-        "keyword": "Scenario Outline",
-        "line": 19,
-        "name": "Email validation",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 9,
-            "name": "I have an email validator",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:9"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 10,
-            "name": "I validate email \"@example.com\"",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:14"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 11,
-            "name": "the result should be false",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:18"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          }
-        ],
-        "tags": [
-          {
-            "name": "@validation",
-            "line": 1
-          },
-          {
-            "name": "@email-validation",
-            "line": 7
-          },
-          {
-            "name": "@smoke",
-            "line": 7
-          }
-        ],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "data-validation;email-validation",
-        "keyword": "Scenario Outline",
-        "line": 20,
-        "name": "Email validation",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 9,
-            "name": "I have an email validator",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:9"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 10,
-            "name": "I validate email \"test@example\"",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:14"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 11,
-            "name": "the result should be false",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:18"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          }
-        ],
-        "tags": [
-          {
-            "name": "@validation",
-            "line": 1
-          },
-          {
-            "name": "@email-validation",
-            "line": 7
-          },
-          {
-            "name": "@smoke",
-            "line": 7
-          }
-        ],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "data-validation;password-validation",
-        "keyword": "Scenario Outline",
-        "line": 30,
-        "name": "Password validation",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 24,
-            "name": "I have a password validator",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:30"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 25,
-            "name": "I validate password \"ValidPass123!\"",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:35"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 26,
-            "name": "the validation result should be true",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:39"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          }
-        ],
-        "tags": [
-          {
-            "name": "@validation",
-            "line": 1
-          },
-          {
-            "name": "@password-validation",
-            "line": 22
-          },
-          {
-            "name": "@smoke",
-            "line": 22
-          }
-        ],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "data-validation;password-validation",
-        "keyword": "Scenario Outline",
-        "line": 31,
-        "name": "Password validation",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 24,
-            "name": "I have a password validator",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:30"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 25,
-            "name": "I validate password \"MyPassword456@\"",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:35"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 26,
-            "name": "the validation result should be true",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:39"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          }
-        ],
-        "tags": [
-          {
-            "name": "@validation",
-            "line": 1
-          },
-          {
-            "name": "@password-validation",
-            "line": 22
-          },
-          {
-            "name": "@smoke",
-            "line": 22
-          }
-        ],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "data-validation;password-validation",
-        "keyword": "Scenario Outline",
-        "line": 32,
-        "name": "Password validation",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 24,
-            "name": "I have a password validator",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:30"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 25,
-            "name": "I validate password \"weak\"",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:35"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 26,
-            "name": "the validation result should be false",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:39"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          }
-        ],
-        "tags": [
-          {
-            "name": "@validation",
-            "line": 1
-          },
-          {
-            "name": "@password-validation",
-            "line": 22
-          },
-          {
-            "name": "@smoke",
-            "line": 22
-          }
-        ],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "data-validation;password-validation",
-        "keyword": "Scenario Outline",
-        "line": 33,
-        "name": "Password validation",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 24,
-            "name": "I have a password validator",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:30"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 25,
-            "name": "I validate password \"NoNumber!\"",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:35"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 26,
-            "name": "the validation result should be false",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:39"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          }
-        ],
-        "tags": [
-          {
-            "name": "@validation",
-            "line": 1
-          },
-          {
-            "name": "@password-validation",
-            "line": 22
-          },
-          {
-            "name": "@smoke",
-            "line": 22
-          }
-        ],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "data-validation;password-validation",
-        "keyword": "Scenario Outline",
-        "line": 34,
-        "name": "Password validation",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 24,
-            "name": "I have a password validator",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:30"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 25,
-            "name": "I validate password \"NoSpecial123\"",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:35"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 26,
-            "name": "the validation result should be false",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:39"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          }
-        ],
-        "tags": [
-          {
-            "name": "@validation",
-            "line": 1
-          },
-          {
-            "name": "@password-validation",
-            "line": 22
-          },
-          {
-            "name": "@smoke",
-            "line": 22
-          }
-        ],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "data-validation;password-validation",
-        "keyword": "Scenario Outline",
-        "line": 35,
-        "name": "Password validation",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 24,
-            "name": "I have a password validator",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:30"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 25,
-            "name": "I validate password \"nouppercase123!\"",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:35"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 26,
-            "name": "the validation result should be false",
-            "match": {
-              "location": "features\\step_definitions\\validation.steps.js:39"
-            },
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "skipped",
-              "duration": 0
-            }
-          }
-        ],
-        "tags": [
-          {
-            "name": "@validation",
-            "line": 1
-          },
-          {
-            "name": "@password-validation",
-            "line": 22
-          },
-          {
-            "name": "@smoke",
-            "line": 22
-          }
-        ],
-        "type": "scenario"
-      }
-    ],
-    "id": "data-validation",
-    "line": 2,
-    "keyword": "Feature",
-    "name": "Data Validation",
-    "tags": [
-      {
-        "name": "@validation",
-        "line": 1
-      }
-    ],
-    "uri": "features\\validation.feature"
+    "uri": "features\\compare_models.feature"
   }
 ]

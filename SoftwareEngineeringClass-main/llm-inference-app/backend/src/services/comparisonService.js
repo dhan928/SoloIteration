@@ -1,6 +1,7 @@
 const supabase = require('../database/supabaseClient');
 const { v4: uuidv4 } = require('uuid');
 const { validateComparisonInput } = require('../utils/comparisonValidators');
+const { generateResponse } = require('./llmInferenceService');
 
 class ComparisonService {
   /**
@@ -53,7 +54,7 @@ class ComparisonService {
         models,
         status: 'pending',
         createdAt: comparisonData.created_at,
-        results: responseRecords.map(r => ({
+        results: responseRecords.map((r) => ({
           model: r.model,
           status: r.status,
           response: null,
@@ -63,6 +64,42 @@ class ComparisonService {
       };
     } catch (error) {
       throw error;
+    }
+  }
+
+  /**
+   * Run stub (or future real) inference for each child row in parallel.
+   * Partial failures are persisted per model; the parent is marked completed when all finish.
+   */
+  static async runInferenceForComparison(comparisonId, prompt, temperature = 0.7, maxTokens = 500) {
+    const rows = await supabase.queryComparisonResponses(`comparison_id=eq.${comparisonId}`);
+    const list = rows || [];
+
+    await Promise.all(
+      list.map(async (row) => {
+        const started = Date.now();
+        try {
+          const text = await generateResponse(row.model, prompt, { temperature, maxTokens });
+          const executionTimeMs = Date.now() - started;
+          await supabase.updateComparisonResponse(row.comparison_response_id, {
+            response: text,
+            execution_time_ms: executionTimeMs,
+            status: 'completed'
+          });
+        } catch (e) {
+          const executionTimeMs = Date.now() - started;
+          await supabase.updateComparisonResponse(row.comparison_response_id, {
+            status: 'failed',
+            error_message: e.message || 'Inference failed',
+            execution_time_ms: executionTimeMs
+          });
+        }
+      })
+    );
+
+    const parentRows = await supabase.queryComparisons(`comparison_id=eq.${comparisonId}`);
+    if (parentRows && parentRows.length > 0) {
+      await supabase.updateComparison(comparisonId, { status: 'completed' });
     }
   }
 
@@ -77,7 +114,9 @@ class ComparisonService {
       );
 
       if (!comparisons || comparisons.length === 0) {
-        throw new Error('Comparison not found');
+        const err = new Error('Comparison not found');
+        err.status = 404;
+        throw err;
       }
 
       const comparison = comparisons[0];
@@ -150,7 +189,9 @@ class ComparisonService {
       );
 
       if (!comparisons || comparisons.length === 0) {
-        throw new Error('Comparison not found');
+        const err = new Error('Comparison not found');
+        err.status = 404;
+        throw err;
       }
 
       // Delete child responses first (cascade will handle this, but explicit for clarity)
@@ -173,8 +214,7 @@ class ComparisonService {
       await supabase.updateComparisonResponse(comparisonResponseId, {
         response,
         execution_time_ms: executionTimeMs,
-        status: 'completed',
-        created_at: new Date().toISOString()
+        status: 'completed'
       });
 
       return { comparisonResponseId, status: 'completed' };
@@ -191,7 +231,7 @@ class ComparisonService {
       await supabase.updateComparisonResponse(comparisonResponseId, {
         status: 'failed',
         error_message: errorMessage,
-        execution_time_ms: 0
+        execution_time_ms: null
       });
 
       return { comparisonResponseId, status: 'failed', errorMessage };
@@ -209,12 +249,12 @@ class ComparisonService {
       prompt: comparison.prompt,
       status: comparison.status,
       createdAt: comparison.createdAt,
-      results: (comparison.results || []).map(r => ({
+      results: (comparison.results || []).map((r) => ({
         model: r.model,
         status: r.status,
-        response: r.response,
-        executionTimeMs: r.executionTimeMs,
-        errorMessage: r.errorMessage
+        response: r.response ?? null,
+        executionTimeMs: r.executionTimeMs ?? null,
+        errorMessage: r.errorMessage ?? null
       }))
     };
   }

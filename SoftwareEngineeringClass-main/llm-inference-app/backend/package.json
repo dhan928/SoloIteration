@@ -6,8 +6,8 @@
   "scripts": {
     "start": "node src/index.js",
     "dev": "nodemon src/index.js",
-    "test": "jasmine \"tests/**/*spec.js\"",
-    "test:watch": "nodemon --exec jasmine -- \"tests/**/*spec.js\""
+    "test": "node -r ./tests/helpers/testEnv.js ./node_modules/jasmine/bin/jasmine.js \"tests/**/*spec.js\"",
+    "test:watch": "nodemon --exec \"node -r ./tests/helpers/testEnv.js ./node_modules/jasmine/bin/jasmine.js\" -- \"tests/**/*spec.js\""
   },
   "keywords": [
     "llm",

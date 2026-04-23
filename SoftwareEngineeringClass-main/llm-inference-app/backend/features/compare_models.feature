@@ -77,8 +77,7 @@ Feature: Compare Multiple LLMs Simultaneously
     Given I am on the dashboard
     And I am in comparison mode
     When I select "gpt-4" twice (attempt duplicate selection)
-    Then the system should prevent duplicate model selection
-    Or the comparison should fail with an error about duplicates
+    Then the comparison should reject duplicate models
 
   @comparison
   Scenario: Comparison validates minimum prompt length
