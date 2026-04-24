@@ -2,31 +2,12 @@
 
 ## What You Need
 
-- Node.js v16+
-- Supabase account (free: https://supabase.com)
-- Git
+- Node.js 18+
+- Python 3 or `http-server`
+- Ollama installed locally if you want local model inference
+- OpenRouter API key if you want cloud model inference
 
-## 1. Get Supabase Ready
-
-1. Create project at https://supabase.com
-2. Go to SQL Editor and run this:
-
-```sql
-CREATE TABLE users (
-  user_id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
-  email VARCHAR(255) UNIQUE NOT NULL,
-  password_hash VARCHAR(255) NOT NULL,
-  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
-CREATE INDEX idx_users_email ON users(email);
-```
-
-3. Go to Settings → API and copy:
-   - Project URL = `SUPABASE_URL`
-   - Anon key = `SUPABASE_ANON_KEY`
-
-## 2. Backend Setup
+## 1. Backend Setup
 
 ```bash
 cd backend
@@ -35,12 +16,20 @@ npm install
 
 Create `.env`:
 
-```
-SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_ANON_KEY=your-key
-JWT_SECRET=any-secret-string
+```env
+SQLITE_DB_PATH=./data/app.db
 PORT=3000
+NODE_ENV=development
+API_BASE_URL=/api/v1
 CORS_ORIGIN=http://127.0.0.1:5500
+OPENROUTER_API_KEY=your_openrouter_key
+OPENROUTER_HTTP_REFERER=http://localhost:3000
+OPENROUTER_APP_TITLE=LLM Inference App
+OPENROUTER_MODEL_GPT35=openai/gpt-3.5-turbo
+OPENROUTER_MODEL_GPT4=openai/gpt-4o-mini
+OPENROUTER_MODEL_CLAUDE=anthropic/claude-3-haiku
+OLLAMA_BASE_URL=http://127.0.0.1:11434
+OLLAMA_MODEL=llama3.2
 ```
 
 Start backend:
@@ -49,97 +38,64 @@ Start backend:
 npm run dev
 ```
 
-Server runs on `http://localhost:3000`
+The SQLite database file is created automatically.
+The schema used by the app is `backend/src/database/schema_sqlite.sql`.
 
-## 3. Frontend Setup
+## 2. Frontend Setup
 
-From the `frontend` folder, pick one:
+From the `frontend` folder:
 
-**Python:**
 ```bash
 python -m http.server 5500
 ```
 
-**Node:**
+Or:
+
 ```bash
-npm install -g http-server
-http-server -p 5500
+npm install
+npm run dev
 ```
 
-Open `http://127.0.0.1:5500`
+Open `http://127.0.0.1:5500`.
 
-## 4. Test It
+## 3. Test It
 
-1. Click "Create Account"
-2. Sign up with email and password
-3. Dashboard should appear with your email
-4. Click "Logout" to test
-
-## Run Tests
-
-**Can't login**
-- Password needs: 8+ chars, uppercase, number, special char
-- Check Supabase has the users table
-   - Should redirect to dashboard
+1. Click `Create Account`
+2. Sign up with a valid email and password
+3. Log in
+4. Open the dashboard
+5. Try both single-model and compare mode
 
 ## Environment Variables
 
-### Backend `.env`
-
 | Variable | Description | Example |
-|----------|-------------|---------|
-| `SUPABASE_URL` | Supabase project URL | `https://xxxxx.supabase.co` |
-| `SUPABASE_ANON_KEY` | Supabase anon key | JWT token from Supabase |
-| `JWT_SECRET` | Secret for token signing | Generate a random string |
+| --- | --- | --- |
+| `SQLITE_DB_PATH` | Local SQLite database file | `./data/app.db` |
 | `PORT` | Backend port | `3000` |
-| `NODE_ENV` | Environment | `development` or `production` |
 | `CORS_ORIGIN` | Frontend URL | `http://localhost:5500` |
+| `OPENROUTER_API_KEY` | OpenRouter key for cloud models | `sk-or-...` |
+| `OLLAMA_BASE_URL` | Local Ollama server URL | `http://127.0.0.1:11434` |
+| `OLLAMA_MODEL` | Ollama model name | `llama3.2` |
 
 ## Common Issues
 
-### "Supabase URL and ANON_KEY must be configured"
+### `Cannot find module 'sqlite3'`
 
-**Solution:** Create `backend/.env` with your Supabase credentials from Settings → API
+Run `npm install` in `backend`.
 
-### "Email already exists" error
+### `Email already exists`
 
-**Solution:** Use a different email, or delete the user from Supabase table
+Use another email, or delete the existing row from the SQLite file.
 
-### "Invalid credentials" on login
+### CORS error on login/signup
 
-**Solution:** Verify email and password are correct. Password is case-sensitive.
+Check that the frontend URL matches `CORS_ORIGIN`.
 
-### CORS error on signup/login
+### Local model does not respond
 
-**Solution:** Make sure backend is running on port 3000 and `CORS_ORIGIN` in `.env` matches your frontend URL
+Make sure Ollama is running:
 
-### Frontend can't reach backend
-
-**Solution:** Ensure backend is running (`npm run dev`) and frontend's `API_BASE_URL` is correct in `main.js`
-
-## Deployment
-
-### Backend
-
-Deploy to Heroku, Vercel, Railway, or your hosting provider:
-
-1. Set environment variables in hosting platform
-2. Install dependencies: `npm install`
-3. Run: `npm start`
-
-### Frontend
-
-Deploy to Netlify, Vercel, GitHub Pages, or any static host:
-
-1. Update `API_BASE_URL` in `assets/js/main.js` to your backend URL
-2. Upload `frontend/` folder
-3. Set base URL to `frontend/index.html`
-
-## File Cleanup
-
-The following files can be removed as they're no longer needed:
-
-- `backend/src/database/dbConnection.js` (old PostgreSQL, use supabaseClient.js instead)
-- `backend/src/database/schema.sql` (old schema file)
-- `test-auth.js` (temporary test file)
-- `SUPABASE_SETUP.md` (covered in this guide)
+```bash
+ollama serve
+ollama pull llama3.2
+```

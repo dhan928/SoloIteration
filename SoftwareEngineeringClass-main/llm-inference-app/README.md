@@ -1,8 +1,10 @@
 # LLM Inference App
 
-Simple web app for running LLM inferences. Uses Supabase for data and a Node REST API for communication.
+Simple web app for single-model prompts and multi-model comparison. The backend uses a local SQLite database file, OpenRouter for cloud models, and Ollama for local models.
 
-**Run guide (install, `.env`, dev servers, tests, one zip):** [`RUN.md`](../RUN.md). If your Git root is above `SoftwareEngineeringClass-main` (e.g. `SoloIteration`), use **[`RUN.md`](../../RUN.md)** there instead.
+**Run guide:** [`RUN.md`](../RUN.md)  
+**Iteration 3 report:** [`ITERATION3_REPORT.md`](./ITERATION3_REPORT.md)  
+**Database tracker:** [`backend/src/database/DATABASE_TRACKER.md`](./backend/src/database/DATABASE_TRACKER.md)
 
 ## Setup
 
@@ -14,7 +16,7 @@ npm install
 npm run dev
 ```
 
-Server runs on `http://localhost:3000`
+Server runs on `http://localhost:3000`.
 
 ### Frontend
 
@@ -27,49 +29,57 @@ Open `http://127.0.0.1:5500` in your browser.
 
 ## Configuration
 
-Create `backend/.env` (see `.env.example` for the full list):
+Create `backend/.env` using `.env.example`:
 
-```
-SUPABASE_URL=https://your-project.supabase.co
-SUPABASE_ANON_KEY=your-key-here
-JWT_SECRET=your-secret-key
+```env
+SQLITE_DB_PATH=./data/app.db
 PORT=3000
 CORS_ORIGIN=http://127.0.0.1:5500
+OPENROUTER_API_KEY=your_openrouter_key
+OLLAMA_BASE_URL=http://127.0.0.1:11434
+OLLAMA_MODEL=llama3.2
 ```
 
-**Compare mode — real LLMs:** set **`OPENROUTER_API_KEY`** so GPT / Claude options use [OpenRouter](https://openrouter.ai/). Set **`OLLAMA_BASE_URL`** (and optionally **`OLLAMA_MODEL`**) so **Local (Ollama)** uses a local [Ollama](https://ollama.com/) model. If unset, the server uses a small **stub** for demos/tests.
+### Multi-model comparison
 
-Get your Supabase URL and key from the Supabase dashboard.
+- Set `OPENROUTER_API_KEY` to use GPT and Claude options through [OpenRouter](https://openrouter.ai/).
+- Set `OLLAMA_BASE_URL` and `OLLAMA_MODEL` to use your local Ollama model.
+- If one or both are unset, the app falls back to stubbed responses where possible.
 
 ## How It Works
 
-The app uses Supabase (PostgreSQL) for storage. Here's the flow:
-
-1. **Sign Up** - Creates a user in Supabase, stores hashed password
-2. **Login** - Retrieves user, checks password, returns JWT token
-3. **Dashboard** - Uses token to fetch user profile and chat history
-
-All communication is REST API over HTTP with JSON.
+1. **Sign Up** creates a user in the local SQLite database.
+2. **Login** validates the password and stores the returned user in browser local storage.
+3. **Dashboard** sends `X-User-Id` on API calls instead of using JWT.
+4. **Compare Mode** submits one prompt to multiple models and stores the result in SQLite.
 
 ## Endpoints
 
 ### Auth
 - `POST /api/v1/auth/register` - Create account
-- `POST /api/v1/auth/login` - Get JWT token
+- `POST /api/v1/auth/login` - Start a local session
+- `POST /api/v1/auth/logout` - Clear session on the client side
 
 ### User
-- `GET /api/v1/users/profile` - Get user info (needs token)
+- `GET /api/v1/users/profile` - Get current user profile
 
-See `API_ROUTES.md` for full details.
+### Inference
+- `POST /api/v1/inference/submit` - Submit one prompt to one model
+- `POST /api/v1/inference/compare` - Submit one prompt to multiple models
+
+See [`API_ROUTES.md`](./API_ROUTES.md) for the full routing table.
 
 ## Database
 
-Supabase tables:
+The actual app schema is in:
 
-- `users` - email, password_hash, user_id, created_at
-- `inferences` - user_id, prompt, response, created_at
+- `backend/src/database/schema_sqlite.sql`
 
-No setup needed - Supabase handles everything.
+The simplified class-report schema is in:
+
+- `backend/src/database/schema_basic.sql`
+
+The SQLite file is created automatically at the `SQLITE_DB_PATH` location.
 
 ## Testing
 
@@ -78,26 +88,9 @@ cd backend
 npm test
 ```
 
-Runs 30 unit tests for validation and user service.
+## Password Rules
 
-## Passwords
-
-Must be:
 - 8+ characters
 - One uppercase letter
 - One number
-- One special character (!@#$%^&*)
-
-## Troubleshooting
-
-**Backend won't start**
-- Did you create `.env`?
-- Is Supabase URL correct?
-
-**Can't login**
-- Is backend running on port 3000?
-- Check browser console for errors
-
-**Network errors**
-- Backend and frontend both running?
-- Is `CORS_ORIGIN` set to `http://127.0.0.1:5500`?
+- One special character (`!@#$%^&*`)

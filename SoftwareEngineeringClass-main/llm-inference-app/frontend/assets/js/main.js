@@ -13,21 +13,23 @@ const API_TIMEOUT = 10000; // 10 seconds
  * Make API call with authentication
  */
 async function apiCall(endpoint, options = {}) {
-    const token = localStorage.getItem('token');
+    const user = JSON.parse(localStorage.getItem('user') || 'null');
     const headers = {
         'Content-Type': 'application/json',
         ...options.headers
     };
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), API_TIMEOUT);
 
-    if (token) {
-        headers['Authorization'] = `Bearer ${token}`;
+    if (user && user.userId) {
+        headers['X-User-Id'] = user.userId;
     }
 
     try {
         const response = await fetch(`${API_BASE_URL}${endpoint}`, {
-            timeout: API_TIMEOUT,
             ...options,
-            headers
+            headers,
+            signal: controller.signal
         });
 
         const data = await response.json();
@@ -41,7 +43,15 @@ async function apiCall(endpoint, options = {}) {
 
         return data;
     } catch (error) {
+        if (error.name === 'AbortError') {
+            throw {
+                status: 408,
+                data: { message: 'Request timed out. Please check that the backend is running.' }
+            };
+        }
         throw error;
+    } finally {
+        clearTimeout(timeoutId);
     }
 }
 
@@ -136,7 +146,7 @@ function clearFieldErrors() {
  * Check if user is authenticated
  */
 function isAuthenticated() {
-    return !!localStorage.getItem('token');
+    return !!localStorage.getItem('user');
 }
 
 /**
@@ -153,8 +163,6 @@ function requireAuth() {
  */
 function logoutUser() {
     if (confirm('Are you sure you want to logout?')) {
-        localStorage.removeItem('token');
-        localStorage.removeItem('refreshToken');
         localStorage.removeItem('user');
         window.location.href = 'index.html';
     }

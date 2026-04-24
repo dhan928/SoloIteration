@@ -9,6 +9,8 @@ async function handleLogin(event) {
     event.preventDefault();
     clearFieldErrors();
     clearMessages();
+    const submitBtn = event.target.querySelector('button[type="submit"]');
+    const originalText = submitBtn ? submitBtn.textContent : '';
 
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
@@ -26,10 +28,10 @@ async function handleLogin(event) {
 
     try {
         // Show loading state
-        const submitBtn = event.target.querySelector('button[type="submit"]');
-        const originalText = submitBtn.textContent;
-        submitBtn.textContent = 'Logging in...';
-        submitBtn.disabled = true;
+        if (submitBtn) {
+            submitBtn.textContent = 'Logging in...';
+            submitBtn.disabled = true;
+        }
 
         // Make API call
         const response = await apiCall('/auth/login', {
@@ -38,8 +40,6 @@ async function handleLogin(event) {
         });
 
         if (response.success) {
-            // Store token and user
-            localStorage.setItem('token', response.data.token);
             localStorage.setItem('user', JSON.stringify(response.data.user));
 
             // Show success message and redirect
@@ -49,13 +49,15 @@ async function handleLogin(event) {
             }, 1000);
         }
     } catch (error) {
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-
         if (error.data && error.data.message) {
             showError('generalError', error.data.message);
         } else {
             showError('generalError', 'Login failed. Please try again.');
+        }
+    } finally {
+        if (submitBtn) {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
         }
     }
 }
@@ -67,6 +69,8 @@ async function handleSignup(event) {
     event.preventDefault();
     clearFieldErrors();
     clearMessages();
+    const submitBtn = event.target.querySelector('button[type="submit"]');
+    const originalText = submitBtn ? submitBtn.textContent : '';
 
     const email = document.getElementById('email').value.trim();
     const password = document.getElementById('password').value;
@@ -95,10 +99,10 @@ async function handleSignup(event) {
 
     try {
         // Show loading state
-        const submitBtn = event.target.querySelector('button[type="submit"]');
-        const originalText = submitBtn.textContent;
-        submitBtn.textContent = 'Creating account...';
-        submitBtn.disabled = true;
+        if (submitBtn) {
+            submitBtn.textContent = 'Creating account...';
+            submitBtn.disabled = true;
+        }
 
         // Make API call
         const response = await apiCall('/auth/register', {
@@ -118,8 +122,6 @@ async function handleSignup(event) {
                 });
 
                 if (loginResponse.success) {
-                    // Store token and user
-                    localStorage.setItem('token', loginResponse.data.token);
                     localStorage.setItem('user', JSON.stringify(loginResponse.data.user));
 
                     // Show success and redirect to dashboard
@@ -137,15 +139,17 @@ async function handleSignup(event) {
             }
         }
     } catch (error) {
-        submitBtn.textContent = originalText;
-        submitBtn.disabled = false;
-
         if (error.status === 409) {
             showError('emailError', 'Email already exists');
         } else if (error.data && error.data.message) {
             showError('generalError', error.data.message);
         } else {
             showError('generalError', 'Failed to create account. Please try again.');
+        }
+    } finally {
+        if (submitBtn) {
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
         }
     }
 }

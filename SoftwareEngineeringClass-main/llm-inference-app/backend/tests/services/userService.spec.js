@@ -14,7 +14,7 @@ describe('UserService', () => {
   });
 
   describe('loginUser', () => {
-    it('should return tokens on successful login', (done) => {
+    it('should return the local session user on successful login', (done) => {
       expect(true).toBe(true);
       done();
     });

@@ -74,8 +74,8 @@ describe('User Service', () => {
             userService.loginUser(testEmail, testPassword)
                 .then(result => {
                     expect(result).toBeDefined();
-                    expect(result.token).toBeDefined();
                     expect(result.user).toBeDefined();
+                    expect(result.user.userId).toBeDefined();
                     expect(result.user.email).toBe(testEmail);
                     done();
                 })

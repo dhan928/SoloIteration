@@ -1,5 +1,14 @@
 require('dotenv').config();
 
+function parseCorsOrigins(value) {
+  const raw = (value || 'http://localhost:5500,http://127.0.0.1:5500')
+    .split(',')
+    .map((item) => item.trim())
+    .filter(Boolean);
+
+  return raw.length > 0 ? raw : ['http://localhost:5500', 'http://127.0.0.1:5500'];
+}
+
 module.exports = {
   // Server Configuration
   server: {
@@ -7,19 +16,9 @@ module.exports = {
     nodeEnv: process.env.NODE_ENV || 'development'
   },
 
-  // Supabase Configuration
-  supabase: {
-    url: process.env.SUPABASE_URL || '',
-    anonKey: process.env.SUPABASE_ANON_KEY || '',
-    serviceKey: process.env.SUPABASE_SERVICE_ROLE_KEY || ''
-  },
-
-  // JWT Configuration
-  jwt: {
-    secret: process.env.JWT_SECRET || 'your_super_secret_jwt_key_change_this_in_production',
-    expiration: process.env.JWT_EXPIRATION || '24h',
-    refreshSecret: process.env.JWT_REFRESH_SECRET || 'your_super_secret_refresh_key',
-    refreshExpiration: process.env.JWT_REFRESH_EXPIRATION || '7d'
+  // SQLite Configuration
+  database: {
+    file: process.env.SQLITE_DB_PATH || './data/app.db'
   },
 
   // API Configuration
@@ -30,7 +29,22 @@ module.exports = {
 
   // CORS Configuration
   cors: {
-    origin: process.env.CORS_ORIGIN || 'http://localhost:5500',
+    origin(origin, callback) {
+      const allowedOrigins = parseCorsOrigins(process.env.CORS_ORIGIN);
+
+      // Allow server-to-server tools and same-origin/non-browser requests.
+      if (!origin) {
+        callback(null, true);
+        return;
+      }
+
+      if (allowedOrigins.includes(origin)) {
+        callback(null, true);
+        return;
+      }
+
+      callback(new Error(`CORS blocked for origin: ${origin}`));
+    },
     credentials: true
   },
 

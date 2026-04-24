@@ -1,5 +1,5 @@
-const supabase = require('../database/supabaseClient');
 const { v4: uuidv4 } = require('uuid');
+const db = require('../database/sqliteClient');
 const { validateComparisonInput } = require('../utils/comparisonValidators');
 const { generateResponse } = require('./llmInferenceService');
 
@@ -18,45 +18,24 @@ class ComparisonService {
       }
 
       const comparisonId = uuidv4();
-      
-      // Create parent comparison record
-      const comparisonData = {
-        comparison_id: comparisonId,
-        user_id: userId,
+      const createdAt = new Date().toISOString();
+      await db.createComparison({
+        recordId: comparisonId,
+        userId,
         prompt,
-        status: 'pending',
-        created_at: new Date().toISOString()
-      };
-
-      const comparison = await supabase.insertComparison(comparisonData);
-      
-      if (!comparison || comparison.length === 0) {
-        throw new Error('Failed to create comparison record');
-      }
-
-      // Create child response records for each model
-      const responseRecords = models.map(model => ({
-        comparison_response_id: uuidv4(),
-        comparison_id: comparisonId,
-        model,
-        response: null,
-        status: 'pending',
-        execution_time_ms: null,
-        error_message: null,
-        created_at: new Date().toISOString()
-      }));
-
-      await supabase.insertComparisonResponses(responseRecords);
+        models,
+        createdAt
+      });
 
       return {
         comparisonId,
         prompt,
         models,
         status: 'pending',
-        createdAt: comparisonData.created_at,
-        results: responseRecords.map((r) => ({
-          model: r.model,
-          status: r.status,
+        createdAt,
+        results: models.map((model) => ({
+          model,
+          status: 'pending',
           response: null,
           executionTimeMs: null,
           errorMessage: null
@@ -71,36 +50,41 @@ class ComparisonService {
    * Run stub (or future real) inference for each child row in parallel.
    * Partial failures are persisted per model; the parent is marked completed when all finish.
    */
-  static async runInferenceForComparison(comparisonId, prompt, temperature = 0.7, maxTokens = 500) {
-    const rows = await supabase.queryComparisonResponses(`comparison_id=eq.${comparisonId}`);
-    const list = rows || [];
+  static async runInferenceForComparison(userId, comparisonId, prompt, temperature = 0.7, maxTokens = 500) {
+    const record = db.normalizeRecord(await db.findRecordById(comparisonId, userId));
+    const models = record ? record.selectedModels : [];
+    const results = [];
 
     await Promise.all(
-      list.map(async (row) => {
+      models.map(async (model) => {
         const started = Date.now();
         try {
-          const text = await generateResponse(row.model, prompt, { temperature, maxTokens });
-          const executionTimeMs = Date.now() - started;
-          await supabase.updateComparisonResponse(row.comparison_response_id, {
+          const text = await generateResponse(model, prompt, { temperature, maxTokens });
+          results.push({
+            model,
             response: text,
-            execution_time_ms: executionTimeMs,
-            status: 'completed'
+            status: 'completed',
+            executionTimeMs: Date.now() - started,
+            errorMessage: null
           });
         } catch (e) {
-          const executionTimeMs = Date.now() - started;
-          await supabase.updateComparisonResponse(row.comparison_response_id, {
+          results.push({
+            model,
+            response: null,
             status: 'failed',
-            error_message: e.message || 'Inference failed',
-            execution_time_ms: executionTimeMs
+            executionTimeMs: Date.now() - started,
+            errorMessage: e.message || 'Inference failed'
           });
         }
       })
     );
-
-    const parentRows = await supabase.queryComparisons(`comparison_id=eq.${comparisonId}`);
-    if (parentRows && parentRows.length > 0) {
-      await supabase.updateComparison(comparisonId, { status: 'completed' });
-    }
+    await db.updateComparisonResults(
+      comparisonId,
+      userId,
+      results,
+      'completed',
+      new Date().toISOString()
+    );
   }
 
   /**
@@ -109,35 +93,19 @@ class ComparisonService {
   static async getComparison(comparisonId, userId) {
     try {
       // Get comparison
-      const comparisons = await supabase.queryComparisons(
-        `comparison_id=eq.${comparisonId}&user_id=eq.${userId}`
-      );
-
-      if (!comparisons || comparisons.length === 0) {
+      const comparison = db.normalizeRecord(await db.findRecordById(comparisonId, userId));
+      if (!comparison || comparison.mode !== 'compare') {
         const err = new Error('Comparison not found');
         err.status = 404;
         throw err;
       }
 
-      const comparison = comparisons[0];
-
-      // Get comparison responses
-      const responses = await supabase.queryComparisonResponses(
-        `comparison_id=eq.${comparisonId}`
-      );
-
       return {
-        comparisonId: comparison.comparison_id,
+        comparisonId: comparison.recordId,
         prompt: comparison.prompt,
         status: comparison.status,
-        createdAt: comparison.created_at,
-        results: (responses || []).map(r => ({
-          model: r.model,
-          response: r.response,
-          status: r.status,
-          executionTimeMs: r.execution_time_ms,
-          errorMessage: r.error_message
-        }))
+        createdAt: comparison.createdAt,
+        results: comparison.results || []
       };
     } catch (error) {
       throw error;
@@ -149,25 +117,17 @@ class ComparisonService {
    */
   static async getComparisonHistory(userId, limit = 50, offset = 0) {
     try {
-      const comparisons = await supabase.queryComparisons(
-        `user_id=eq.${userId}`,
-        {
-          limit,
-          offset,
-          order: 'created_at.desc'
-        }
+      const comparisons = (await db.listComparisons(userId, limit, offset)).map((row) =>
+        db.normalizeRecord(row)
       );
-
-      // Get total count
-      const allComparisons = await supabase.queryComparisons(`user_id=eq.${userId}`);
-      const total = allComparisons ? allComparisons.length : 0;
+      const total = await db.countComparisons(userId);
 
       return {
-        data: (comparisons || []).map(comp => ({
-          comparisonId: comp.comparison_id,
+        data: comparisons.map((comp) => ({
+          comparisonId: comp.recordId,
           prompt: comp.prompt,
           status: comp.status,
-          createdAt: comp.created_at
+          createdAt: comp.createdAt
         })),
         total,
         limit,
@@ -184,21 +144,14 @@ class ComparisonService {
   static async deleteComparison(comparisonId, userId) {
     try {
       // First check if comparison exists and belongs to user
-      const comparisons = await supabase.queryComparisons(
-        `comparison_id=eq.${comparisonId}&user_id=eq.${userId}`
-      );
-
-      if (!comparisons || comparisons.length === 0) {
+      const comparison = await db.findRecordById(comparisonId, userId);
+      if (!comparison) {
         const err = new Error('Comparison not found');
         err.status = 404;
         throw err;
       }
 
-      // Delete child responses first (cascade will handle this, but explicit for clarity)
-      await supabase.deleteComparisonResponsesByComparison(comparisonId);
-
-      // Delete the comparison
-      await supabase.deleteComparison(comparisonId);
+      await db.deleteRecord(comparisonId, userId);
 
       return { success: true };
     } catch (error) {
@@ -210,34 +163,14 @@ class ComparisonService {
    * Update a comparison response (called when model finishes inference)
    */
   static async updateComparisonResponse(comparisonResponseId, response, executionTimeMs) {
-    try {
-      await supabase.updateComparisonResponse(comparisonResponseId, {
-        response,
-        execution_time_ms: executionTimeMs,
-        status: 'completed'
-      });
-
-      return { comparisonResponseId, status: 'completed' };
-    } catch (error) {
-      throw error;
-    }
+    return { comparisonResponseId, response, executionTimeMs, status: 'completed' };
   }
 
   /**
    * Update a comparison response with error
    */
   static async updateComparisonResponseError(comparisonResponseId, errorMessage) {
-    try {
-      await supabase.updateComparisonResponse(comparisonResponseId, {
-        status: 'failed',
-        error_message: errorMessage,
-        execution_time_ms: null
-      });
-
-      return { comparisonResponseId, status: 'failed', errorMessage };
-    } catch (error) {
-      throw error;
-    }
+    return { comparisonResponseId, status: 'failed', errorMessage };
   }
 
   /**

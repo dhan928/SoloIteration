@@ -36,6 +36,14 @@ class AuthController {
         });
       }
 
+      if (error.status === 400) {
+        return res.status(400).json({
+          success: false,
+          message: error.message,
+          error: { code: 'VALIDATION_ERROR' }
+        });
+      }
+
       console.error('Registration error:', error);
       return res.status(500).json({
         success: false,
@@ -71,19 +79,19 @@ class AuthController {
         data: result
       });
     } catch (error) {
-      if (error.message === 'User not found') {
-        return res.status(404).json({
-          success: false,
-          message: 'User not found',
-          error: { code: 'USER_NOT_FOUND' }
-        });
-      }
-
-      if (error.message === 'Invalid password') {
+      if (error.status === 401) {
         return res.status(401).json({
           success: false,
           message: 'Invalid credentials',
           error: { code: 'INVALID_CREDENTIALS' }
+        });
+      }
+
+      if (error.status === 400) {
+        return res.status(400).json({
+          success: false,
+          message: error.message,
+          error: { code: 'VALIDATION_ERROR' }
         });
       }
 
@@ -100,23 +108,10 @@ class AuthController {
    * Logout user
    */
   static async logout(req, res) {
-    try {
-      const userId = req.user.userId;
-
-      await UserService.logoutUser(userId);
-
-      return res.status(200).json({
-        success: true,
-        message: 'Logout successful'
-      });
-    } catch (error) {
-      console.error('Logout error:', error);
-      return res.status(500).json({
-        success: false,
-        message: 'Internal server error',
-        error: { code: 'LOGOUT_ERROR' }
-      });
-    }
+    return res.status(200).json({
+      success: true,
+      message: 'Logout successful'
+    });
   }
 }
 

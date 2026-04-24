@@ -1,7 +1,6 @@
 const bcryptjs = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const supabase = require('../database/supabaseClient');
-const config = require('../config/config');
+const { v4: uuidv4 } = require('uuid');
+const db = require('../database/sqliteClient');
 const { isValidEmail, isValidPassword } = require('../utils/validators');
 
 class UserService {
@@ -24,9 +23,9 @@ class UserService {
       }
 
       // Check if user already exists
-      const existingUsers = await supabase.queryUsers(`email=eq.${email}`);
+      const existingUser = await db.findUserByEmail(email);
       
-      if (existingUsers && existingUsers.length > 0) {
+      if (existingUser) {
         const error = new Error('Email already exists');
         error.status = 409;
         throw error;
@@ -36,15 +35,16 @@ class UserService {
       const hashedPassword = await bcryptjs.hash(password, 10);
       
       // Create user
-      const newUser = await supabase.insertUser({
+      const newUser = await db.createUser({
+        userId: uuidv4(),
         email,
-        password_hash: hashedPassword,
-        created_at: new Date().toISOString()
+        passwordHash: hashedPassword,
+        createdAt: new Date().toISOString()
       });
 
       return {
-        userId: newUser[0].user_id,
-        email: newUser[0].email
+        userId: newUser.user_id,
+        email: newUser.email
       };
     } catch (error) {
       throw error;
@@ -64,15 +64,13 @@ class UserService {
       }
 
       // Find user by email
-      const users = await supabase.queryUsers(`email=eq.${email}`);
-      
-      if (!users || users.length === 0) {
+      const user = await db.findUserByEmail(email);
+
+      if (!user) {
         const error = new Error('Invalid email or password');
         error.status = 401;
         throw error;
       }
-
-      const user = users[0];
 
       // Verify password
       const isPasswordValid = await bcryptjs.compare(password, user.password_hash);
@@ -82,15 +80,7 @@ class UserService {
         throw error;
       }
 
-      // Generate JWT token
-      const token = jwt.sign(
-        { userId: user.user_id, email: user.email },
-        config.jwt.secret,
-        { expiresIn: config.jwt.expiration }
-      );
-
       return {
-        token,
         user: {
           userId: user.user_id,
           email: user.email
@@ -106,15 +96,14 @@ class UserService {
    */
   static async getUserProfile(userId) {
     try {
-      const users = await supabase.queryUsers(`user_id=eq.${userId}`);
+      const user = await db.findUserById(userId);
 
-      if (!users || users.length === 0) {
+      if (!user) {
         const error = new Error('User not found');
         error.status = 404;
         throw error;
       }
 
-      const user = users[0];
       return {
         userId: user.user_id,
         email: user.email,
@@ -123,6 +112,36 @@ class UserService {
     } catch (error) {
       throw error;
     }
+  }
+
+  static async changePassword(userId, oldPassword, newPassword) {
+    const user = await db.findUserById(userId);
+    if (!user) {
+      const error = new Error('User not found');
+      error.status = 404;
+      throw error;
+    }
+
+    const matches = await bcryptjs.compare(oldPassword, user.password_hash);
+    if (!matches) {
+      const error = new Error('Invalid current password');
+      error.status = 401;
+      throw error;
+    }
+
+    if (!isValidPassword(newPassword)) {
+      const error = new Error('Password does not meet requirements');
+      error.status = 400;
+      throw error;
+    }
+
+    const passwordHash = await bcryptjs.hash(newPassword, 10);
+    await db.updateUserPassword(userId, passwordHash);
+    return { success: true };
+  }
+
+  static async logoutUser() {
+    return { success: true };
   }
 }
 

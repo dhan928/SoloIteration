@@ -1,1478 +1,295 @@
 [
   {
-    "description": "  As a logged-in user\n  I want to submit one prompt to multiple models\n  So that I can compare answers side by side",
+    "description": "  As a user\n  I want to register and log in\n  So that I can access the dashboard",
     "elements": [
       {
         "description": "",
-        "id": "compare-multiple-llms-simultaneously;successful-comparison-across-multiple-models",
+        "id": "authentication;successful-registration-with-valid-credentials",
         "keyword": "Scenario",
-        "line": 13,
-        "name": "Successful comparison across multiple models",
+        "line": 6,
+        "name": "Successful registration with valid credentials",
         "steps": [
           {
             "keyword": "Before",
             "hidden": true,
             "result": {
               "status": "passed",
-              "duration": 921500
-            }
-          },
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 48799
+              "duration": 1533999
             }
           },
           {
             "arguments": [],
             "keyword": "Given ",
-            "line": 8,
-            "name": "the application is initialized",
+            "line": 7,
+            "name": "I am a new visitor",
             "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:10"
+              "location": "features\\step_definitions\\app.steps.js:15"
             },
             "result": {
               "status": "passed",
-              "duration": 4523599
+              "duration": 8260899
             }
           },
           {
             "arguments": [],
-            "keyword": "And ",
-            "line": 9,
-            "name": "the database is accessible",
+            "keyword": "When ",
+            "line": 8,
+            "name": "I register with email \"student@example.com\" and password \"ValidPass123!\"",
             "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:14"
+              "location": "features\\step_definitions\\app.steps.js:19"
             },
             "result": {
               "status": "passed",
-              "duration": 1737500
+              "duration": 6270899
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 9,
+            "name": "the registration should succeed",
+            "match": {
+              "location": "features\\step_definitions\\app.steps.js:53"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 691799
             }
           },
           {
             "arguments": [],
             "keyword": "And ",
             "line": 10,
-            "name": "I am logged in as a test user",
+            "name": "the created user email should be \"student@example.com\"",
             "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:16"
+              "location": "features\\step_definitions\\app.steps.js:58"
             },
             "result": {
               "status": "passed",
-              "duration": 908299
+              "duration": 2038999
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "authentication;login-succeeds-with-an-existing-account",
+        "keyword": "Scenario",
+        "line": 12,
+        "name": "Login succeeds with an existing account",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 1238000
             }
           },
           {
             "arguments": [],
             "keyword": "Given ",
-            "line": 14,
-            "name": "I am on the dashboard",
+            "line": 13,
+            "name": "a registered user with email \"existing@example.com\" and password \"ValidPass123!\"",
             "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:20"
+              "location": "features\\step_definitions\\app.steps.js:63"
             },
             "result": {
               "status": "passed",
-              "duration": 396899
+              "duration": 12804099
             }
           },
           {
             "arguments": [],
             "keyword": "When ",
-            "line": 15,
-            "name": "I select \"gpt-4\" and \"claude-v1\" for comparison",
+            "line": 14,
+            "name": "I log in with email \"existing@example.com\" and password \"ValidPass123!\"",
             "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:28"
+              "location": "features\\step_definitions\\app.steps.js:74"
             },
             "result": {
               "status": "passed",
-              "duration": 3166399
+              "duration": 19695699
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 15,
+            "name": "the login should succeed",
+            "match": {
+              "location": "features\\step_definitions\\app.steps.js:93"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1100400
             }
           },
           {
             "arguments": [],
             "keyword": "And ",
             "line": 16,
-            "name": "I type \"Explain photosynthesis simply\" in the comparison prompt input",
+            "name": "the logged in user email should be \"existing@example.com\"",
             "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:40"
+              "location": "features\\step_definitions\\app.steps.js:98"
             },
             "result": {
               "status": "passed",
-              "duration": 1948099
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 17,
-            "name": "I click the Compare button",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:48"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 1871600
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 18,
-            "name": "I should see a response card for \"gpt-4\"",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:75"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 1327299
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 19,
-            "name": "I should see a response card for \"claude-v1\"",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:75"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 754400
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 20,
-            "name": "the comparison should be saved in history",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:101"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 1810400
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 21,
-            "name": "I should see both models in the comparison history",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:105"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 1330600
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 452099
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 143900
+              "duration": 5120499
             }
           }
         ],
-        "tags": [
-          {
-            "name": "@comparison",
-            "line": 1
-          },
-          {
-            "name": "@comparison",
-            "line": 12
-          },
-          {
-            "name": "@smoke",
-            "line": 12
-          }
-        ],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "compare-multiple-llms-simultaneously;comparison-request-fails-when-no-model-is-selected",
-        "keyword": "Scenario",
-        "line": 24,
-        "name": "Comparison request fails when no model is selected",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 312700
-            }
-          },
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 46699
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 8,
-            "name": "the application is initialized",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:10"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 4775399
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 9,
-            "name": "the database is accessible",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:14"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 1285700
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 10,
-            "name": "I am logged in as a test user",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:16"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 548800
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 25,
-            "name": "I am on the dashboard",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:20"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 379500
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 26,
-            "name": "I am in comparison mode",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:24"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 462700
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 27,
-            "name": "I type \"Explain photosynthesis simply\" in the comparison prompt input",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:40"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 2570600
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 28,
-            "name": "I don't select any models",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:44"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 1136099
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 29,
-            "name": "I click the Compare button",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:48"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 1035799
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 30,
-            "name": "I should see a validation error \"Please select at least 2 models\"",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:116"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 3108299
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 31,
-            "name": "no comparison should be created",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:134"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 1425799
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 528300
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 383799
-            }
-          }
-        ],
-        "tags": [
-          {
-            "name": "@comparison",
-            "line": 1
-          },
-          {
-            "name": "@comparison",
-            "line": 23
-          }
-        ],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "compare-multiple-llms-simultaneously;comparison-request-fails-with-single-model-selection",
-        "keyword": "Scenario",
-        "line": 34,
-        "name": "Comparison request fails with single model selection",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 212099
-            }
-          },
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 154799
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 8,
-            "name": "the application is initialized",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:10"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 114800
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 9,
-            "name": "the database is accessible",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:14"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 208799
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 10,
-            "name": "I am logged in as a test user",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:16"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 102200
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 35,
-            "name": "I am on the dashboard",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:20"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 71299
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 36,
-            "name": "I am in comparison mode",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:24"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 72499
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 37,
-            "name": "I select \"gpt-4\" for comparison",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:32"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 2043400
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 38,
-            "name": "I type \"Explain photosynthesis simply\" in the comparison prompt input",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:40"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 281700
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 39,
-            "name": "I click the Compare button",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:48"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 73899
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 40,
-            "name": "I should see a validation error containing \"2 models\"",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:121"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 2646499
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 41,
-            "name": "no comparison should be created",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:134"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 590699
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 410200
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 141799
-            }
-          }
-        ],
-        "tags": [
-          {
-            "name": "@comparison",
-            "line": 1
-          },
-          {
-            "name": "@comparison",
-            "line": 33
-          }
-        ],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "compare-multiple-llms-simultaneously;partial-failure-still-shows-successful-model-results",
-        "keyword": "Scenario",
-        "line": 44,
-        "name": "Partial failure still shows successful model results",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 174699
-            }
-          },
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 29599
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 8,
-            "name": "the application is initialized",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:10"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 69899
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 9,
-            "name": "the database is accessible",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:14"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 185600
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 10,
-            "name": "I am logged in as a test user",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:16"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 67199
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 45,
-            "name": "I am on the dashboard",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:20"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 48700
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 46,
-            "name": "I am in comparison mode",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:24"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 372700
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 47,
-            "name": "I select \"gpt-4\" and \"local-small\" for comparison",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:28"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 176299
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 48,
-            "name": "I type \"Tell me a joke\" in the comparison prompt input",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:40"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 99800
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 49,
-            "name": "I click the Compare button",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:48"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 67999
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 50,
-            "name": "I should see a response card for \"gpt-4\" with status \"completed\"",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:81"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 1813300
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 51,
-            "name": "I should see a response card for \"local-small\" with status \"completed\" or \"failed\"",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:88"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 2876099
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 52,
-            "name": "the successful model response should be visible",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:138"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 1715100
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 53,
-            "name": "the failed model should show an error state",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:143"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 1206699
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 243900
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 264499
-            }
-          }
-        ],
-        "tags": [
-          {
-            "name": "@comparison",
-            "line": 1
-          },
-          {
-            "name": "@comparison",
-            "line": 43
-          }
-        ],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "compare-multiple-llms-simultaneously;delete-comparison-from-history",
-        "keyword": "Scenario",
-        "line": 56,
-        "name": "Delete comparison from history",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 282500
-            }
-          },
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 37100
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 8,
-            "name": "the application is initialized",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:10"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 64900
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 9,
-            "name": "the database is accessible",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:14"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 162299
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 10,
-            "name": "I am logged in as a test user",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:16"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 47199
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 57,
-            "name": "I am on the dashboard",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:20"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 61399
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 58,
-            "name": "I have created a comparison",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:149"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 2089699
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 59,
-            "name": "I can see the comparison in history",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:177"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 925399
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 60,
-            "name": "I click the delete button on the comparison",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:185"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 705199
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 61,
-            "name": "I confirm the deletion",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:190"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 588500
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 62,
-            "name": "the comparison should be removed from history",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:196"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 697399
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 63,
-            "name": "a new comparison load should not include it",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:200"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 870799
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 171999
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 119599
-            }
-          }
-        ],
-        "tags": [
-          {
-            "name": "@comparison",
-            "line": 1
-          },
-          {
-            "name": "@comparison",
-            "line": 55
-          }
-        ],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "compare-multiple-llms-simultaneously;reload-comparison-from-history",
-        "keyword": "Scenario",
-        "line": 66,
-        "name": "Reload comparison from history",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 367600
-            }
-          },
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 42699
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 8,
-            "name": "the application is initialized",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:10"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 78399
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 9,
-            "name": "the database is accessible",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:14"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 145499
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 10,
-            "name": "I am logged in as a test user",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:16"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 55900
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 67,
-            "name": "I am on the dashboard",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:20"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 43499
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 68,
-            "name": "I have created a comparison with prompt \"What is machine learning?\"",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:163"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 1311700
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 69,
-            "name": "I can see the comparison in the history panel",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:181"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 6332600
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 70,
-            "name": "I click on the comparison in the history",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:204"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 397100
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 71,
-            "name": "the comparison details should be reloaded",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:216"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 551500
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 72,
-            "name": "I should see the same prompt \"What is machine learning?\"",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:220"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 1047699
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 73,
-            "name": "I should see all the model responses again",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:224"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 530799
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 137000
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 170200
-            }
-          }
-        ],
-        "tags": [
-          {
-            "name": "@comparison",
-            "line": 1
-          },
-          {
-            "name": "@comparison",
-            "line": 65
-          }
-        ],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "compare-multiple-llms-simultaneously;comparison-with-duplicate-model-selections-fails",
-        "keyword": "Scenario",
-        "line": 76,
-        "name": "Comparison with duplicate model selections fails",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 299899
-            }
-          },
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 31900
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 8,
-            "name": "the application is initialized",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:10"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 59200
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 9,
-            "name": "the database is accessible",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:14"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 128299
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 10,
-            "name": "I am logged in as a test user",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:16"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 245400
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 77,
-            "name": "I am on the dashboard",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:20"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 54700
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 78,
-            "name": "I am in comparison mode",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:24"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 47899
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 79,
-            "name": "I select \"gpt-4\" twice (attempt duplicate selection)",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:36"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 2410599
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 80,
-            "name": "the comparison should reject duplicate models",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:228"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 1124800
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 493100
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 310500
-            }
-          }
-        ],
-        "tags": [
-          {
-            "name": "@comparison",
-            "line": 1
-          },
-          {
-            "name": "@comparison",
-            "line": 75
-          }
-        ],
-        "type": "scenario"
-      },
-      {
-        "description": "",
-        "id": "compare-multiple-llms-simultaneously;comparison-validates-minimum-prompt-length",
-        "keyword": "Scenario",
-        "line": 83,
-        "name": "Comparison validates minimum prompt length",
-        "steps": [
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 358999
-            }
-          },
-          {
-            "keyword": "Before",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 57999
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 8,
-            "name": "the application is initialized",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:10"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 138599
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 9,
-            "name": "the database is accessible",
-            "match": {
-              "location": "features\\step_definitions\\authentication.steps.js:14"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 210700
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 10,
-            "name": "I am logged in as a test user",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:16"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 56100
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Given ",
-            "line": 84,
-            "name": "I am on the dashboard",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:20"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 32400
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 85,
-            "name": "I am in comparison mode",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:24"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 28000
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "When ",
-            "line": 86,
-            "name": "I select \"gpt-4\" and \"claude-v1\" for comparison",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:28"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 55700
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 87,
-            "name": "I type \"hi\" in the comparison prompt input",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:40"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 36299
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 88,
-            "name": "I click the Compare button",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:48"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 54200
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "Then ",
-            "line": 89,
-            "name": "I should see a validation error about prompt length",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:126"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 1030300
-            }
-          },
-          {
-            "arguments": [],
-            "keyword": "And ",
-            "line": 90,
-            "name": "no comparison should be created",
-            "match": {
-              "location": "features\\step_definitions\\compare_models.steps.js:134"
-            },
-            "result": {
-              "status": "passed",
-              "duration": 490699
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 232700
-            }
-          },
-          {
-            "keyword": "After",
-            "hidden": true,
-            "result": {
-              "status": "passed",
-              "duration": 165199
-            }
-          }
-        ],
-        "tags": [
-          {
-            "name": "@comparison",
-            "line": 1
-          },
-          {
-            "name": "@comparison",
-            "line": 82
-          }
-        ],
+        "tags": [],
         "type": "scenario"
       }
     ],
-    "id": "compare-multiple-llms-simultaneously",
-    "line": 2,
+    "id": "authentication",
+    "line": 1,
     "keyword": "Feature",
-    "name": "Compare Multiple LLMs Simultaneously",
-    "tags": [
+    "name": "Authentication",
+    "tags": [],
+    "uri": "features\\authentication.feature"
+  },
+  {
+    "description": "  As a logged-in user\n  I want to submit one prompt to multiple models\n  So that I can compare answers side by side",
+    "elements": [
       {
-        "name": "@comparison",
-        "line": 1
+        "description": "",
+        "id": "compare-multiple-models;successful-comparison-across-two-models",
+        "keyword": "Scenario",
+        "line": 6,
+        "name": "Successful comparison across two models",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 82799
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 7,
+            "name": "a logged-in user with id \"user-1\"",
+            "match": {
+              "location": "features\\step_definitions\\app.steps.js:103"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1793099
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 8,
+            "name": "I submit a comparison prompt \"Explain photosynthesis simply\" to models \"gpt-4,claude-v1\"",
+            "match": {
+              "location": "features\\step_definitions\\app.steps.js:110"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 3351499
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 9,
+            "name": "the comparison should succeed",
+            "match": {
+              "location": "features\\step_definitions\\app.steps.js:135"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 725599
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "And ",
+            "line": 10,
+            "name": "the comparison should include 2 model results",
+            "match": {
+              "location": "features\\step_definitions\\app.steps.js:140"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 1425500
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
+      },
+      {
+        "description": "",
+        "id": "compare-multiple-models;comparison-fails-when-fewer-than-two-models-are-selected",
+        "keyword": "Scenario",
+        "line": 12,
+        "name": "Comparison fails when fewer than two models are selected",
+        "steps": [
+          {
+            "keyword": "Before",
+            "hidden": true,
+            "result": {
+              "status": "passed",
+              "duration": 346600
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Given ",
+            "line": 13,
+            "name": "a logged-in user with id \"user-1\"",
+            "match": {
+              "location": "features\\step_definitions\\app.steps.js:103"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 452699
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "When ",
+            "line": 14,
+            "name": "I submit a comparison prompt \"Explain photosynthesis simply\" to models \"gpt-4\"",
+            "match": {
+              "location": "features\\step_definitions\\app.steps.js:110"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 460599
+            }
+          },
+          {
+            "arguments": [],
+            "keyword": "Then ",
+            "line": 15,
+            "name": "the comparison should fail validation",
+            "match": {
+              "location": "features\\step_definitions\\app.steps.js:145"
+            },
+            "result": {
+              "status": "passed",
+              "duration": 855099
+            }
+          }
+        ],
+        "tags": [],
+        "type": "scenario"
       }
     ],
+    "id": "compare-multiple-models",
+    "line": 1,
+    "keyword": "Feature",
+    "name": "Compare multiple models",
+    "tags": [],
     "uri": "features\\compare_models.feature"
   }
 ]

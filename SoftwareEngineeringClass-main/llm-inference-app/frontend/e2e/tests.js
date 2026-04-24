@@ -20,7 +20,7 @@ async function withBrowser({ headed }, fn) {
   }
 }
 
-async function setupApiMocks(page, { email, token = 'fake-jwt-token' } = {}) {
+async function setupApiMocks(page, { email } = {}) {
   await page.setRequestInterception(true);
 
   page.on('request', (req) => {
@@ -63,7 +63,6 @@ async function setupApiMocks(page, { email, token = 'fake-jwt-token' } = {}) {
       respondJson(200, {
         success: true,
         data: {
-          token,
           user: { userId: 'user-123', email: email || 'user@example.com' },
         },
       });
@@ -183,8 +182,8 @@ async function testSignupSuccessRedirectsToDashboardAndShowsUser({ page }) {
   const displayed = await page.$eval('#userName', (el) => (el.textContent || '').trim());
   assert.strictEqual(displayed, email);
 
-  const token = await page.evaluate(() => localStorage.getItem('token'));
-  assert.ok(token, 'Expected token to be set in localStorage');
+  const storedUser = await page.evaluate(() => localStorage.getItem('user'));
+  assert.ok(storedUser, 'Expected user session to be set in localStorage');
 }
 
 async function testLoginSuccessRedirectsToDashboard({ page }) {
@@ -242,4 +241,3 @@ async function runAll({ headed = false } = {}) {
 }
 
 module.exports = { runAll };
-

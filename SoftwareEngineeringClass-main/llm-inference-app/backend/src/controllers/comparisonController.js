@@ -29,6 +29,7 @@ class ComparisonController {
       );
 
       await ComparisonService.runInferenceForComparison(
+        userId,
         comparison.comparisonId,
         prompt,
         temperature,
