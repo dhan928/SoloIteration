@@ -31,6 +31,7 @@ module.exports = {
   cors: {
     origin(origin, callback) {
       const allowedOrigins = parseCorsOrigins(process.env.CORS_ORIGIN);
+      const localhostPattern = /^https?:\/\/(localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/i;
 
       // Allow server-to-server tools and same-origin/non-browser requests.
       if (!origin) {
@@ -38,7 +39,7 @@ module.exports = {
         return;
       }
 
-      if (allowedOrigins.includes(origin)) {
+      if (allowedOrigins.includes(origin) || localhostPattern.test(origin)) {
         callback(null, true);
         return;
       }

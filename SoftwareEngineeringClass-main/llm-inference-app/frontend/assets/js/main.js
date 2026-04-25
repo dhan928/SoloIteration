@@ -2,7 +2,11 @@
 // Configuration
 // ===========================
 
-const API_BASE_URL = 'http://localhost:3000/api/v1';
+const API_HOST =
+    window.location.hostname === '127.0.0.1'
+        ? '127.0.0.1'
+        : window.location.hostname || 'localhost';
+const API_BASE_URL = `${window.location.protocol}//${API_HOST}:3000/api/v1`;
 const API_TIMEOUT = 10000; // 10 seconds
 
 // ===========================
@@ -47,6 +51,15 @@ async function apiCall(endpoint, options = {}) {
             throw {
                 status: 408,
                 data: { message: 'Request timed out. Please check that the backend is running.' }
+            };
+        }
+        if (!error.status) {
+            throw {
+                status: 0,
+                data: {
+                    message:
+                        'Could not reach the backend. Make sure the backend server is running on port 3000 and then refresh the page.'
+                }
             };
         }
         throw error;
