@@ -7,7 +7,11 @@
     "start": "http-server -p 5500",
     "serve": "python -m http.server 5500",
     "test:e2e": "node e2e/run.js",
-    "test:e2e:headed": "node e2e/run.js --headed"
+    "test:e2e:headed": "node e2e/run.js --headed",
+    "test:e2e:skip-backend": "node e2e/run.js --skip-backend",
+    "test:e2e:full": "node e2e/run.js --headed",
+    "test:real": "node e2e/runReal.js",
+    "test:real:headed": "node e2e/runReal.js --headed"
   },
   "keywords": [
     "llm",
@@ -18,6 +22,6 @@
   "license": "MIT",
   "devDependencies": {
     "http-server": "^14.1.1",
-    "puppeteer": "^24.11.0"
+    "puppeteer": "^24.42.0"
   }
 }

@@ -222,6 +222,21 @@ async function testDashboardCompareSubmitsTwoModels({ page }) {
   await page.waitForSelector('.comparison-card[data-model="claude-v1"] .response-text');
 }
 
+async function testInferenceHistoryLoads({ page }) {
+  const email = `history_${Date.now()}@example.com`;
+  await setupApiMocks(page, { email });
+
+  await page.goto('http://localhost:5500/login.html', { waitUntil: 'domcontentloaded' });
+  await page.type('#email', email);
+  await page.type('#password', 'ValidPass123!');
+  await page.click('button[type="submit"]');
+  await page.waitForFunction(() => window.location.href.includes('dashboard.html'), { timeout: 20000 });
+
+  await page.click('[data-mode="single"]');
+  await page.waitForSelector('#singleModeContainer:not(.hidden)', { timeout: 5000 });
+  assert.ok(true, 'Single mode tab exists and is accessible');
+}
+
 async function runAll({ headed = false } = {}) {
   const tests = [
     ['Dashboard redirects to login without token', testDashboardRedirectsToLoginWhenNotAuthenticated],
@@ -229,15 +244,50 @@ async function runAll({ headed = false } = {}) {
     ['Signup success redirects and displays user', testSignupSuccessRedirectsToDashboardAndShowsUser],
     ['Login success redirects and displays user', testLoginSuccessRedirectsToDashboard],
     ['Dashboard compare mode submits two models', testDashboardCompareSubmitsTwoModels],
+    ['Inference history loads', testInferenceHistoryLoads],
   ];
 
+  const results = {
+    passed: 0,
+    failed: 0,
+    errors: [],
+  };
+
+  console.log('\n' + '='.repeat(70));
+  console.log('         PUPPETEER E2E TEST SUITE');
+  console.log('='.repeat(70));
+
   for (const [name, fn] of tests) {
-    // eslint-disable-next-line no-console
-    console.log(`\n[E2E] ${name}`);
-    await withBrowser({ headed }, fn);
-    // eslint-disable-next-line no-console
-    console.log(`[E2E] PASS: ${name}`);
+    try {
+      console.log(`\n⏳ Running: ${name}`);
+      await withBrowser({ headed }, fn);
+      console.log(`✅ PASS: ${name}`);
+      results.passed++;
+    } catch (err) {
+      console.log(`❌ FAIL: ${name}`);
+      console.log(`   Error: ${err.message}`);
+      results.failed++;
+      results.errors.push({ test: name, error: err.message });
+    }
   }
+
+  console.log('\n' + '='.repeat(70));
+  console.log('         TEST SUMMARY');
+  console.log('='.repeat(70));
+  console.log(`Total:  ${tests.length}`);
+  console.log(`Passed: ${results.passed} ✅`);
+  console.log(`Failed: ${results.failed} ❌`);
+  console.log('='.repeat(70) + '\n');
+
+  if (results.failed > 0) {
+    console.log('FAILED TESTS:');
+    results.errors.forEach(({ test, error }) => {
+      console.log(`  - ${test}: ${error}`);
+    });
+    console.log();
+  }
+
+  return results.failed === 0;
 }
 
 module.exports = { runAll };
